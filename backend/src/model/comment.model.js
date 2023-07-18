@@ -14,7 +14,7 @@ const findOne= async (id)=> {
     try{
         const [comment] = await db.query("select * from `comment` where id = ? ", [id]);
 
-        return pcomment;
+        return comment;
     }catch(e){
         console.log(e);
     }
