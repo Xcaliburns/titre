@@ -21,7 +21,7 @@ function Admin() {
       .catch((err) => console.error(err));
   }, [productId]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (err) => {
     setProductId(productId);
 
     if (description && price && photo && title) {

@@ -23,6 +23,9 @@ export default function NavBar() {
     navigate("/login");
   };
 
+
+ 
+
   return (
     <nav className="w-full bg-dark shadow h-24">
       <div className="max-w-7xl mx-auto px-4 md:px-8">

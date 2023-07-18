@@ -15,11 +15,11 @@ function App() {
       <CurrentUserContextProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/panier" element={<Panier />} />          
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/article" element={<Article />} />
+          <Route path="login" element={<Login />} />
+          <Route path="panier" element={<Panier />} />          
+          <Route path="admin" element={<Admin />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="article/:id" element={<Article />} />
         </Routes>
       </CurrentUserContextProvider>
     </BrowserRouter>

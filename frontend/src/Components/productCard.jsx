@@ -7,20 +7,20 @@ function ProductCard({id, description, price, photo, title }) {
   const navigate = useNavigate();
 
 
-  // const [singleProductId, setSingleProductId] = useState();
+  
   
   const stockId = () =>{
-    // setSingleProductId(id);
+    
     localStorage.setItem("singleProductId", id);
-    
-    if(localStorage.getItem("singleProductId") ){
-      navigate("/article");
-    }
-    
-  }
+    navigate(`/article/${id}`);    
+    console.log(id);
+   }
+
+
+   
   return (
     <div
-     onClick={stockId}
+    onClick={stockId}
       className="flex flex-row h-48 w-80 items-center border-4 border-cyan-500 bg-cyan-50 rounded-md shadow-lg shadow-cyan-500/100  mt-3 mx-10 hover:shadow-green-500/100 hover:border-green-500"
     >
       <img
@@ -32,10 +32,10 @@ function ProductCard({id, description, price, photo, title }) {
         <div className="  w-48 h-12 text-center">{title}</div>
         <div className="  w-48 h-54 text-center">{description}</div>
         <div className=" pb-2  text-2xl">{price} €</div>
+        <div className=" pb-2  text-2xl">{id} </div>
+
       </div>
-      {/* <Link to={`/products/${id}`} className="product-link">
-        View Details
-      </Link> */}
+     
     </div>
   );
 }

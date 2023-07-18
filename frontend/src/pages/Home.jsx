@@ -22,7 +22,7 @@ function Home() {
   }, []);
 
   localStorage.removeItem("singleProductId");
-   console.log(product[0])
+   console.log(product)
   console.log(userName);
   console.log(userEmail);
   console.log(userId);
