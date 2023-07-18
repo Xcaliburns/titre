@@ -6,6 +6,7 @@ const userRoutes = require ("./user.routes.js")
 const cartRoutes=require("./cart.routes");
 const authRoutes = require("./auth.routes.js");
 const cartproductRoutes=require("./cartproduct.routes");
+const commentRoutes=require("./comment.routes");
 const authorization = require("../middleware/auth.js");
 
 const router = express.Router();
@@ -16,7 +17,7 @@ router.use("/movie",authorization, movieRoutes);// toutes les route movies sont 
 router.use("/user",userRoutes);
 router.use("/cart",authorization,cartRoutes);
 router.use("/cartproduct",authorization,cartproductRoutes);
-router.use("/comment",authRoutes);
+router.use("/comment",commentRoutes);
 router.use(authRoutes);
 
 module.exports = router;
