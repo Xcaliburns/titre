@@ -10,12 +10,13 @@ const authorization = require("../middleware/auth.js");
 
 const router = express.Router();
 
- // les midleware placé dans ce fichier seront global pour toutes les routes/*
+ // les midlewares placés dans ce fichier seront global pour toutes les routes/*
 router.use("/product",productRoutes);
-router.use("/movie",authorization, movieRoutes);// toutes les route movies sont du coup soumise a authorization
+router.use("/movie",authorization, movieRoutes);// toutes les route movies sont du coup soumises a authorization
 router.use("/user",userRoutes);
-router.use("/cart",authorization,cartRoutes)
-router.use("/cartproduct",authorization,cartproductRoutes)
+router.use("/cart",authorization,cartRoutes);
+router.use("/cartproduct",authorization,cartproductRoutes);
+router.use("/comment",authRoutes);
 router.use(authRoutes);
 
 module.exports = router;
