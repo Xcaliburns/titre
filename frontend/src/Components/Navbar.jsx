@@ -56,9 +56,7 @@ export default function NavBar() {
             <NavLink to="/signup">Inscription</NavLink>
           </div>
           <div className="flex flex-row">
-            <div className="hover:text-green-300">
-              <NavLink to="/panier">Panier</NavLink>
-            </div>
+            
             <div className="hover:text-green-300">
               {userEmail === adminLog && (
                 <NavLink to="/admin">Admin</NavLink>
@@ -88,9 +86,7 @@ export default function NavBar() {
           <NavLink to="/signup" className="block text-white hover:text-green-300 py-2">
             Inscription
           </NavLink>
-          <NavLink to="/panier" className="block text-white hover:text-green-300 py-2">
-            Panier
-          </NavLink>
+         
           {userEmail === adminLog && (
             <NavLink to="/admin" className="block text-white hover:text-green-300 py-2">
               Admin

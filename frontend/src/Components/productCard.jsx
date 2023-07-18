@@ -32,7 +32,7 @@ function ProductCard({id, description, price, photo, title }) {
         <div className="  w-48 h-12 text-center">{title}</div>
         <div className="  w-48 h-54 text-center">{description}</div>
         <div className=" pb-2  text-2xl">{price} €</div>
-        <div className=" pb-2  text-2xl">{id} </div>
+        
 
       </div>
      
