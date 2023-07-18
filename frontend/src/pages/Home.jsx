@@ -4,24 +4,30 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
 import Navbar from "../Components/Navbar";
 import ProductCard from "../Components/productCard";
-function home() {
+import { useNavigate } from "react-router-dom";
+
+
+function Home() {
+
+
   const [product, setProduct] = useState([]);
   const { userName, user, userEmail, userId } = useUserContext();
+  const navigate = useNavigate();
+
+
   useEffect(() => {
     CallApi.get("/api/product")
       .then((res) => setProduct(res.data))
       .catch((err) => console.error(err));
   }, []);
-  // console.log(user)
+
+  localStorage.removeItem("singleProductId");
+   console.log(product)
   console.log(userName);
   console.log(userEmail);
   console.log(userId);
 
-  //  const handleAdd=(()=>{
-  //     callApi.post("api/cartproduct",{
-  //       cartId,productId,quantity
-  //     })
-  //   })
+ 
   return (
     <div className="flex flex-col items-center bg-gray-600 min-h-full bg-cover ">
       <Navbar />
@@ -38,8 +44,10 @@ function home() {
               description={product.description}
               price={product.price}
               title={product.title}
+              id={product.id}
+              
             />
-            // {/* <button type="button" onClick={handleAdd}>ajouter au panier</button> */}
+           
           ))
         ) : (
           <p>No products found.</p>
@@ -49,4 +57,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

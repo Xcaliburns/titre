@@ -8,7 +8,8 @@ export default function NavBar() {
   const { userEmail, setUserEmail, setUserName, setUserId } = useUserContext();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const adminLog = "admin@example.com"; // Replace this with the admin email
+  const adminLog = import.meta.env.VITE_ADMIN_LOGIN;
+
 
   const logout = (e) => {
     e.preventDefault();
@@ -22,24 +23,53 @@ export default function NavBar() {
     navigate("/login");
   };
 
+
+ 
+
   return (
     <nav className="w-full bg-dark shadow h-24">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5">
           <h2 className="text-2xl font-bold text-white">indie World</h2>
           <div className="md:hidden">
-            <div
-              className={`text-white p-2 ${
-                isMenuOpen ? "text-white" : ""
-              }`}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <FaTimes className="text-3xl" /> : <FaBars className="text-3xl" />}
-            </div>
+            {isMenuOpen ? (
+              <FaTimes
+                className="text-white text-3xl cursor-pointer"
+                onClick={() => setIsMenuOpen(false)}
+              />
+            ) : (
+              <FaBars
+                className="text-white text-3xl cursor-pointer"
+                onClick={() => setIsMenuOpen(true)}
+              />
+            )}
           </div>
         </div>
         <nav className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:text-xl text-gray-100">
-          {/* Your existing menu items */}
+          <div className="hover:text-green-300">
+            <NavLink to="/">Accueil</NavLink>
+          </div>
+          <div className="hover:text-green-300">
+            <NavLink to="/login">Login</NavLink>
+          </div>
+          <div className="hover:text-green-300">
+            <NavLink to="/signup">Inscription</NavLink>
+          </div>
+          <div className="flex flex-row">
+            <div className="hover:text-green-300">
+              <NavLink to="/panier">Panier</NavLink>
+            </div>
+            <div className="hover:text-green-300">
+              {userEmail === adminLog && (
+                <NavLink to="/admin">Admin</NavLink>
+              )}
+            </div>
+            <div className="hover:text-red-900">
+              <button className="" type="button" onClick={logout}>
+                Logout
+              </button>
+            </div>
+          </div>
         </nav>
       </div>
       {/* Responsive menu items */}
