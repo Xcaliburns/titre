@@ -11,7 +11,7 @@ function Home() {
 
 
   const [product, setProduct] = useState([]);
-  const { userName, user, userEmail, userId } = useUserContext();
+  const { userName, user, userEmail, userId,userRole, } = useUserContext();
   const navigate = useNavigate();
 
 
@@ -26,6 +26,7 @@ function Home() {
   console.log(userName);
   console.log(userEmail);
   console.log(userId);
+  console.log(userRole);
 
  
   return (

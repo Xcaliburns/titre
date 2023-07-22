@@ -8,10 +8,10 @@ export function CurrentUserContextProvider({ children }) {
   const [userName, setUserName] = useState(JSON.parse(localStorage.getItem("userName"))); 
   const [userId, setUserId] = useState((localStorage.getItem("userId")));
   const [userEmail, setUserEmail] = useState(JSON.parse(localStorage.getItem("userEmail")));  
-
+  const [userRole, setUserRole] = useState(JSON.parse(localStorage.getItem("role")));
  
   return (
-    <CurrentUserContext.Provider value={{userName, setUserName,userEmail, setUserEmail,userId, setUserId,} }>
+    <CurrentUserContext.Provider value={{userName, setUserName,userEmail, setUserEmail,userId, setUserId,userRole, setUserRole,} }>
       {children}
     </CurrentUserContext.Provider>
   );

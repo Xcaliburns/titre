@@ -8,7 +8,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setUser, setUserName, setUserId, setUserEmail } = useUserContext();
+  const { setUser, setUserName, setUserId, setUserEmail,setUserRole } = useUserContext();
 
   const navigate = useNavigate();
 
@@ -19,14 +19,17 @@ function Login() {
       callApi
         .post("/api/login", { email, password })
         .then((res) => {
+          
           // setUser(res.data);
           setUserName(res.data.name);
           setUserEmail(res.data.email);
           setUserId(res.data.userId);
+          setUserRole(res.data.role);
           // localStorage.setItem("user", JSON.stringify(res.data));
           localStorage.setItem("userName", JSON.stringify(res.data.name));
           localStorage.setItem("userEmail", JSON.stringify(res.data.email));
           localStorage.setItem("userId", JSON.stringify(res.data.userId));
+          localStorage.setItem("role", JSON.stringify(res.data.role));
           navigate("/");
         })
         .catch((err) => console.log("OHNOOOOO"));
