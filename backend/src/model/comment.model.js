@@ -2,7 +2,7 @@ const db =require("./db.js");
 
 const findAll= async ()=> {
     try{
-        const [comments] = await db.query("select * from `comment`");
+        const [comments] = await db.query("SELECT c.*, u.name FROM `comment` c LEFT JOIN user u ON c.user_id = u.id ");
 
         return comments;
     }catch(e){
@@ -24,11 +24,11 @@ const addOne = async (comment) => {
 
     try{
 
-        const{ text,user_id,product_id} = product
-        const [result] = await db.query("insert into comment (text, user_id,product_id) values (?,?,?)", [comment.text, comment.user_id, comment.produt_id,]
+        const{ text,user_id,product_id} = comment
+        const [result] = await db.query("insert into comment (text, user_id,product_id) values (?,?,?)", [comment.text, comment.user_id, comment.product_id,]
         );
 
-    return { id: result.insertId,text, user_id, product_id  };  /id: result.insertId clé SQL2 qui renvoie l'id du commentaire crée/
+    return { id: result.insertId,text, user_id, product_id  };  
     } catch (error) {
         throw new Error(`Impossible de créer le produit: ${error}`);
     }
