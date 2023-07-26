@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { CurrentUserContextProvider } from "./context/UserContext";
-
+import { useUserContext } from "./context/UserContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -10,21 +10,29 @@ import Admin from "./pages/Admin";
 import Article from "./pages/article";
 
 function App() {
+  const { user } = useUserContext();
+  console.log(user);
   return (
     <BrowserRouter>
-      <CurrentUserContextProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="panier" element={<Panier />} />          
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="panier" element={<Panier />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="article/:id" element={<Article />} />
+        {/* <Route
+          element={
+            <ProtectedRoute
+            isAllowed={user !== null && user.role === "admin"}
+              redirectPath="/login"
+            />
+          }
+        >
           <Route path="admin" element={<Admin />} />
-          <Route path="signup" element={<SignUp />} />
-          <Route path="article/:id" element={<Article />} />
-        </Routes>
-      </CurrentUserContextProvider>
+        </Route> */}
+      </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-

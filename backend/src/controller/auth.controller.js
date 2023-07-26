@@ -41,4 +41,3 @@ const logout = async (req, res) => {
 };
 
 module.exports = { login, logout};
-//stop 1h56

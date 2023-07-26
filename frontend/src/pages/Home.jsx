@@ -6,14 +6,10 @@ import Navbar from "../Components/Navbar";
 import ProductCard from "../Components/productCard";
 import { useNavigate } from "react-router-dom";
 
-
 function Home() {
-
-
   const [product, setProduct] = useState([]);
-  const { userName, user, userEmail, userId,userRole, } = useUserContext();
+  const { userName, user, userEmail, userId, userRole } = useUserContext();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     CallApi.get("/api/product")
@@ -21,14 +17,18 @@ function Home() {
       .catch((err) => console.error(err));
   }, []);
 
-  localStorage.removeItem("singleProductId");
-   console.log(product)
+  // localStorage.removeItem("singleProductId");
+  console.log(product);
   console.log(userName);
   console.log(userEmail);
   console.log(userId);
   console.log(userRole);
+  console.log(typeof(product));
+  console.log(typeof(userName));
+  console.log(typeof(userEmail));
+  console.log(typeof(userId));
+  console.log(typeof(userRole));
 
- 
   return (
     <div className="flex flex-col items-center bg-gray-600 min-h-full bg-cover ">
       <Navbar />
@@ -46,9 +46,7 @@ function Home() {
               price={product.price}
               title={product.title}
               id={product.id}
-              
             />
-           
           ))
         ) : (
           <p>No products found.</p>

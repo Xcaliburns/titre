@@ -5,7 +5,7 @@ import { useUserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  const { userEmail, setUserEmail, setUserName, setUserId, setUserRole } =
+  const { user,setUser,userEmail, setUserEmail, setUserName, setUserId, setUserRole } =
     useUserContext();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,9 +13,12 @@ export default function NavBar() {
 
   const logout = (e) => {
     e.preventDefault();
+    // localStorage.setItem("user",{});
     localStorage.removeItem("userName");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+    // setUser("tutu");
     setUserEmail("");
     setUserName("");
     setUserId("");
