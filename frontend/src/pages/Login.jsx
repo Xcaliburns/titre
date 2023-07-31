@@ -8,8 +8,9 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {
-    // setUser,
+  const {  
+    user,  
+    setUser,
     setUserName,
     setUserId,
     setUserEmail,
@@ -25,19 +26,21 @@ function Login() {
       callApi
         .post("/api/login", { email, password })
         .then((res) => {
-          const user = res.data;
-          // setUser(user);
+          const userOnline = res.data;
+          
           setUserName(res.data.name);
           setUserEmail(res.data.email);
           setUserId(res.data.userId);
           setUserRole(JSON.stringify(res.data.role));
           console.log(typeof res.data.role);
-          localStorage.setItem("user", JSON.stringify(user));
-          localStorage.setItem("userName", JSON.stringify(user.name));
-          localStorage.setItem("userEmail", JSON.stringify(user.email));
-          localStorage.setItem("userId", JSON.stringify(user.userId));
-          localStorage.setItem("role", JSON.stringify(user.role));
-          console.log(user);
+          localStorage.setItem("user", JSON.stringify(userOnline));
+          localStorage.setItem("userName", JSON.stringify(userOnline.name));
+          localStorage.setItem("userEmail", JSON.stringify(userOnline.email));
+          localStorage.setItem("userId", JSON.stringify(userOnline.userId));
+          localStorage.setItem("role", JSON.stringify(userOnline.role));
+          setUser((JSON.parse(localStorage.getItem("user"))));
+          console.log(localStorage.getItem("user"));
+          
           navigate("/");
         })
         .catch((err) => console.log("OHNOOOOO"));

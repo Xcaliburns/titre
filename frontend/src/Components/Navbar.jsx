@@ -13,12 +13,12 @@ export default function NavBar() {
 
   const logout = (e) => {
     e.preventDefault();
-    // localStorage.setItem("user",{});
+    localStorage.removeItem("user");
     localStorage.removeItem("userName");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userId");
     localStorage.removeItem("role");
-    // setUser("tutu");
+    setUser(null);
     setUserEmail("");
     setUserName("");
     setUserId("");

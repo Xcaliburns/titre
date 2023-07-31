@@ -10,8 +10,10 @@ import Admin from "./pages/Admin";
 import Article from "./pages/article";
 
 function App() {
-  const { user } = useUserContext();
+  const {user} = useUserContext();
   console.log(user);
+  console.log((JSON.parse(localStorage.getItem("user"))))
+  console.log(`ici le user ${user}`);
   return (
     <BrowserRouter>
       <Routes>
@@ -20,16 +22,16 @@ function App() {
         <Route path="panier" element={<Panier />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="article/:id" element={<Article />} />
-        {/* <Route
+        <Route
           element={
             <ProtectedRoute
-            isAllowed={user !== null && user.role === "admin"}
-              redirectPath="/login"
+              isAllowed={user && user.role===("admin") }
+              redirectPath="/"
             />
           }
         >
           <Route path="admin" element={<Admin />} />
-        </Route> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );
