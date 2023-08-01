@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useState, useEffect } from "react";
 import CallApi from "../services/CallApi";
 import Navbar from "../components/Navbar";
@@ -77,8 +77,8 @@ function Admin() {
     }
   };
 
-  const handleDelete = (e) => {
-    //e.preventDefault();
+  const handleDelete = (err) => {
+    //err.preventDefault();
     if (deleteId)
       CallApi.delete(`/api/product/${deleteId}`)
         .then(() => {})
@@ -97,8 +97,8 @@ function Admin() {
     setProductId(e.target.value);
   };
 
-  const handleDeleteId = (e) => {
-    setDeleteId(e.target.value);
+  const handleDeleteId = (err) => {
+    setDeleteId(err.target.value);
   };
 
   return (
@@ -123,8 +123,8 @@ function Admin() {
                   name="description"
                   className="block w-2/3 rounded-md"
                   id="description"
-                  minlength="4"
-                  maxlength="100"
+                  minLength="4"
+                  maxLength="100"
                   size="80"
                 />
               </div>

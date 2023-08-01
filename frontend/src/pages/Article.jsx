@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CallApi from "../Services/CallApi";
 import Navbar from "../components/Navbar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Article() {
   const [article, setArticle] = useState([]);
@@ -18,7 +20,9 @@ function Article() {
 
   useEffect(() => {
     CallApi.get(`/api/comment`)
-      .then((res) => setCommentsData(res.data))
+      .then((res) => setCommentsData(res.data)
+      )
+      
       
       .catch((err) => console.error(err));
   }, [addedComment]);
@@ -28,8 +32,8 @@ function Article() {
     (comment) => comment.product_id === parseInt(articleId, 10)
   );
 
-  const handleCommentChange = (e) => {
-    setCommentText(e.target.value);
+  const handleCommentChange = (err) => {
+    setCommentText(err.target.value);
   };
 
   const handleAddComment = () => {
@@ -41,14 +45,34 @@ function Article() {
       };
 
       CallApi.post("/api/comment", newComment)
-        .then((response) => {
-          const newComment = response.data;
+        .then((res) => {
+          const newComment = res.data;
           setCommentsData([...commentsData, newComment]);
           setCommentText("");
           setAddedComment(!addedComment);
+          toast.success("🦄 merci pour votre commentaire!", {
+            position: "top-center",
+            autoClose: 4000, // 4 seconds
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         })
-        .catch((error) => {
-          console.error("Error adding comment:", error);
+        .catch((err) => {
+          console.err("Error adding comment:", err);
+          toast.error("❌ Échec lors de l'ajout du commentaire.", {
+            position: "top-center",
+            autoClose: 4000, // 4 seconds
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         });
     }
   };
@@ -87,6 +111,7 @@ function Article() {
           >
             Add Comment
           </button>
+          <ToastContainer />
         </div>
 
         <div className="commentList grid gap-2">
