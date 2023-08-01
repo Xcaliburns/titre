@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import{ useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import callApi from "../Services/CallApi";
@@ -9,7 +10,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const {  
-    user,  
+    user, 
     setUser,
     setUserName,
     setUserId,

@@ -1,4 +1,4 @@
-import React from "react";
+
 import CallApi from "../Services/CallApi";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
@@ -33,7 +33,8 @@ function Home() {
     <div className="flex flex-col items-center bg-gray-600 min-h-full bg-cover  ">
       <Navbar />
       <div className="text-3xl text-slate-100 mt-24  mb-12 h-grow">
-        Hello {userName}
+        {user && user!==null ? (`Hello ${userName}`):("hello guest")}
+        
       </div>
       <div className="flex flex-wrap justify-center rounded border-x-2 ">
         {Array.isArray(product) && product.length > 0 ? (

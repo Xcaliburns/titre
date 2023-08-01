@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const { user,
+    setUserLog,
     setUser,userEmail, setUserEmail, setUserName, setUserId, setUserRole 
   } =
     useUserContext();
@@ -25,6 +26,7 @@ export default function NavBar() {
     setUserName("");
     setUserId("");
     setUserRole("");
+    setUserLog("");
     alert("vous avez été déconnecté");
     navigate("/login");
   };
