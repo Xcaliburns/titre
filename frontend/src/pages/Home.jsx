@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
 import Navbar from "../Components/Navbar";
 import ProductCard from "../Components/productCard";
-import { useNavigate } from "react-router-dom";
+
 
 function Home() {
   const [product, setProduct] = useState([]);
   const { userName, user, userEmail, userId, userRole } = useUserContext();
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     CallApi.get("/api/product")
@@ -30,12 +30,12 @@ function Home() {
   console.log(typeof(userRole));
 
   return (
-    <div className="flex flex-col items-center bg-gray-600 min-h-full bg-cover ">
+    <div className="flex flex-col items-center bg-gray-600 min-h-full bg-cover  ">
       <Navbar />
       <div className="text-3xl text-slate-100 mt-24  mb-12 h-grow">
         Hello {userName}
       </div>
-      <div className="flex flex-wrap rounded border-x-2 ">
+      <div className="flex flex-wrap justify-center rounded border-x-2 ">
         {Array.isArray(product) && product.length > 0 ? (
           product.map((product) => (
             <ProductCard

@@ -13,12 +13,13 @@ export function CurrentUserContextProvider({ children }) {
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
   const [userEmail, setUserEmail] = useState(JSON.parse(localStorage.getItem("userEmail")));
   const [userRole, setUserRole] = useState(JSON.parse(localStorage.getItem("role"))); // Convertir en objet JavaScript avec JSON.parse()
-
+  const [userLog, setUserLog] = useState(JSON.parse(localStorage.getItem("user")));
   return (
 
     
     <CurrentUserContext.Provider value={{
        user,setUser,
+       userLog,setUserLog,
        userName, setUserName, userEmail, setUserEmail, userId, setUserId, userRole, setUserRole }}>
       {children}
     </CurrentUserContext.Provider>

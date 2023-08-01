@@ -5,7 +5,9 @@ import { useUserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  const { user,setUser,userEmail, setUserEmail, setUserName, setUserId, setUserRole } =
+  const { user,
+    setUser,userEmail, setUserEmail, setUserName, setUserId, setUserRole 
+  } =
     useUserContext();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,10 +30,10 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="w-full bg-dark shadow h-24">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between py-3 md:py-5">
-          <h2 className="text-2xl font-bold text-white">indie World</h2>
+    <nav className="w-full bg-dark shadow h-24 " >
+      <div className="max-w-7xl mx-auto px-4 md:px-8 ">
+        <div className="flex items-center justify-center py-3 md:py-5">
+          <h2 className="text-2xl font-bold text-white">InDéJouable</h2>
           <div className="md:hidden">
             {isMenuOpen ? (
               <FaTimes
@@ -46,7 +48,7 @@ export default function NavBar() {
             )}
           </div>
         </div>
-        <nav className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:text-xl text-gray-100">
+        <nav className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:text-xl text-gray-100 justify-center">
           <div className="hover:text-green-300">
             <NavLink to="/">Accueil</NavLink>
           </div>
@@ -57,13 +59,14 @@ export default function NavBar() {
             <NavLink to="/signup">Inscription</NavLink>
           </div>
           <div className="flex flex-row">
-            <div className="hover:text-green-300">
-              {userEmail === adminLog && <NavLink to="/admin">Admin</NavLink>}
-            </div>
+            
             <div className="hover:text-red-900">
               <button className="" type="button" onClick={logout}>
                 Logout
-              </button>
+              </button>              
+            </div>
+            <div className="hover:text-green-300 ml-2">
+              {userEmail === adminLog && <NavLink to="/admin">Admin</NavLink>}
             </div>
           </div>
         </nav>
