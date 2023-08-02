@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import CallApi from "../Services/CallApi";
 import Navbar from "../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
