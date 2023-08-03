@@ -1,5 +1,4 @@
-
-import{ useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import callApi from "../Services/CallApi";
@@ -9,14 +8,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {  
-    user, 
-    setUser,
-    setUserName,
-    setUserId,
-    setUserEmail,
-    setUserRole,
-  } = useUserContext();
+  const { setUser } = useUserContext();
 
   const navigate = useNavigate();
 
@@ -28,23 +20,14 @@ function Login() {
         .post("/api/login", { email, password })
         .then((res) => {
           const userOnline = res.data;
-          
-          setUserName(res.data.name);
-          setUserEmail(res.data.email);
-          setUserId(res.data.userId);
-          setUserRole(JSON.stringify(res.data.role));
-          console.log(typeof res.data.role);
+
           localStorage.setItem("user", JSON.stringify(userOnline));
-          localStorage.setItem("userName", JSON.stringify(userOnline.name));
-          localStorage.setItem("userEmail", JSON.stringify(userOnline.email));
-          localStorage.setItem("userId", JSON.stringify(userOnline.userId));
-          localStorage.setItem("role", JSON.stringify(userOnline.role));
-          setUser((JSON.parse(localStorage.getItem("user"))));
-          console.log(localStorage.getItem("user"));
-          
+          setUser(JSON.parse(localStorage.getItem("user")));
+
           navigate("/");
         })
-        .catch((err) => console.log("OHNOOOOO"));
+        .catch((err) => console.error("Erreur : ", err));
+                        
     } else {
       alert("Please specify email and password");
     }

@@ -21,7 +21,7 @@ function ProductCard({id, description, price, photo, title }) {
   return (
     <div
     onClick={stockId}
-      className="flex flex-row h-48 w-80 items-center border-4 border-cyan-500 bg-cyan-50 rounded-md shadow-lg shadow-cyan-500/100  mt-3 mx-10 hover:shadow-green-500/100 hover:border-green-500"
+      className="flex flex-row h-48 w-80 items-center border-4 border-red-600 bg-grey-100 text-white rounded-md shadow-lg shadow-cyan-500/100  mt-3 mx-10 hover:shadow-green-500/100 hover:border-green-500"
     >
       <img
         className="h-24 max-w-48 rounded-md   "

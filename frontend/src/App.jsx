@@ -11,9 +11,7 @@ import Article from "./pages/article";
 
 function App() {
   const {user} = useUserContext();
-  console.log(user);
-  console.log((JSON.parse(localStorage.getItem("user"))))
-  console.log(`ici le user ${user}`);
+ 
   return (
     <BrowserRouter>
       <Routes>
