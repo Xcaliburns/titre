@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const { user,
-    setUserLog,
-    setUser,userEmail, setUserEmail, setUserName, setUserId, setUserRole 
+    
+    setUser 
   } =
     useUserContext();
   const navigate = useNavigate();
@@ -17,16 +17,9 @@ export default function NavBar() {
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("user");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("role");
-    setUser(null);
-    setUserEmail("");
-    setUserName("");
-    setUserId("");
-    setUserRole("");
-    setUserLog("");
+  
+    setUser("");
+   
     alert("vous avez été déconnecté");
     navigate("/login");
   };
@@ -68,7 +61,7 @@ export default function NavBar() {
               </button>              
             </div>
             <div className="hover:text-green-300 ml-2">
-              {userEmail === adminLog && <NavLink to="/admin">Admin</NavLink>}
+              {user.email === adminLog && <NavLink to="/admin">Admin</NavLink>}
             </div>
           </div>
         </nav>
@@ -99,7 +92,7 @@ export default function NavBar() {
             Inscription
           </NavLink>
 
-          {userEmail === adminLog && (
+          {user.email === adminLog && (
             <NavLink
               to="/admin"
               className="block text-white hover:text-green-300 py-2"
