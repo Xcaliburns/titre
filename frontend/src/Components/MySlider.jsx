@@ -4,7 +4,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 
+import customPrevArrow from "../assets/previousArrow.svg";
+import customNextArrow from "../assets/nextArrow.svg";
+
+import'../index.css';
+
 function MySlider({ data }) {
+
+
+
   const settings = {
     dots: true,
     infinite: true,
@@ -12,6 +20,9 @@ function MySlider({ data }) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    prevArrow: <img src={customPrevArrow} alt="Previous" />,
+    nextArrow: <img src={customNextArrow} alt="Next" />,
+   
   };
 
   const navigate = useNavigate();
