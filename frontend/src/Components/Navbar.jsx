@@ -5,11 +5,7 @@ import { useUserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  const { user,
-    
-    setUser 
-  } =
-    useUserContext();
+  const { user, setUser } = useUserContext();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const adminLog = import.meta.env.VITE_ADMIN_LOGIN;
@@ -17,15 +13,14 @@ export default function NavBar() {
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem("user");
-  
-    setUser("");
-   
+    // localStorage.setItem("user", JSON.stringify());
+    setUser(JSON.parse(localStorage.getItem("user")));
     alert("vous avez été déconnecté");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
-    <nav className="w-full bg-dark shadow h-24 " >
+    <nav className="w-full bg-dark shadow h-24 ">
       <div className="max-w-7xl mx-auto px-4 md:px-8 ">
         <div className="flex items-center justify-center py-3 md:py-5">
           <h2 className="text-2xl font-bold text-white">InDéJouable</h2>
@@ -48,20 +43,24 @@ export default function NavBar() {
             <NavLink to="/">Accueil</NavLink>
           </div>
           <div className="hover:text-green-300">
+            <NavLink to="/search">recherche</NavLink>
+          </div>
+          <div className="hover:text-green-300">
             <NavLink to="/login">Login</NavLink>
           </div>
           <div className="hover:text-green-300">
             <NavLink to="/signup">Inscription</NavLink>
           </div>
           <div className="flex flex-row">
-            
             <div className="hover:text-red-900">
               <button className="" type="button" onClick={logout}>
                 Logout
-              </button>              
+              </button>
             </div>
             <div className="hover:text-green-300 ml-2">
-              {user.email === adminLog && <NavLink to="/admin">Admin</NavLink>}
+              {user && user.email === adminLog && (
+                <NavLink to="/admin">Admin</NavLink>
+              )}
             </div>
           </div>
         </nav>
@@ -79,6 +78,14 @@ export default function NavBar() {
           >
             Accueil
           </NavLink>
+          <div className="hover:text-green-300">
+            <NavLink
+              to="/search"
+              className="block text-white hover:text-green-300 py-2"
+            >
+              recherche
+            </NavLink>
+          </div>
           <NavLink
             to="/login"
             className="block text-white hover:text-green-300 py-2"
@@ -92,7 +99,7 @@ export default function NavBar() {
             Inscription
           </NavLink>
 
-          {user.email === adminLog && (
+          {user && user.email === adminLog && (
             <NavLink
               to="/admin"
               className="block text-white hover:text-green-300 py-2"
