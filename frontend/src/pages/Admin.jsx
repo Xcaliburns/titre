@@ -76,7 +76,7 @@ function Admin() {
   };
 
   const handleUpdate = (err) => {
-    err.preventDefault();
+     err.preventDefault();
     if (
       shortDescription &&
       description &&
@@ -98,12 +98,11 @@ function Admin() {
         release,
       })
         .then(() => {
-          
           toast.success("Article mis à jour avec succès !");
         })
         .catch((err) => console.log(err.response.data));
     else {
-      alert("Please specify a description, a price  a password and a title");
+      alert("veuillez controller si tous les champs sont à jour");
     }
   };
 
@@ -112,7 +111,6 @@ function Admin() {
     if (deleteId) {
       CallApi.delete(`/api/product/${deleteId}`)
         .then(() => {
-          
           toast.success("Produit supprimé avec succès !", {
             position: "center",
             autoClose: 5000,
@@ -121,7 +119,6 @@ function Admin() {
         })
         .catch((err) => console.log(err.response.data));
     } else {
-      
       toast.error("Erreur lors de la suppression !", {
         position: "center",
         autoClose: 5000,
@@ -129,14 +126,26 @@ function Admin() {
       });
     }
   };
-  
 
   const handleProductChange = (e) => {
-    setProductId(e.target.value);
+    setProductId(e.target.value, 10);
+    const selectedProduct = productData.find(
+      (product) => product.id === parseInt(e.target.value, 10)
+    );
+    
+    if (selectedProduct) {
+      setShortDescription(selectedProduct.short_description);
+      setDescription(selectedProduct.description);
+      setPrice(selectedProduct.price);
+      setPhoto(selectedProduct.photo);
+      setTitle(selectedProduct.title);
+      setStudio(selectedProduct.studio);
+      setGenre(selectedProduct.genre);
+      setRelease(selectedProduct.release);
+    }
   };
 
   const handleDeleteId = (e) => {
-
     setDeleteId(e.target.value);
   };
 
@@ -148,56 +157,51 @@ function Admin() {
 
       <div className="flex flex-col lg:flex-row">
         <div className="w-full px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
-          
           <form className="bg-gray-800 " onSubmit={handleSubmit}>
+            <div className="mt-4">
+              <label
+                htmlFor="text"
+                className="block text-sm font-medium text-gray-400 "
+              >
+                resumé
+              </label>
+            </div>
+            <div className="flex flex-col items-start">
+              <input
+                onChange={(e) => setShortDescription(e.target.value)}
+                value={shortDescription}
+                type="text"
+                name="shortDescription"
+                className="block w-2/3 rounded-md"
+                id="shortDescription"
+                minLength="4"
+                maxLength="100"
+                size="80"
+              />
+            </div>
 
-            
-              <div className="mt-4">
-                <label
-                  htmlFor="text"
-                  className="block text-sm font-medium text-gray-400 "
-                >
-                  resumé
-                </label>
-              </div>
+            <div className="mt-4">
+              <label
+                htmlFor="text"
+                className="block text-sm font-medium text-gray-400 "
+              >
+                description
+              </label>
               <div className="flex flex-col items-start">
                 <input
-                  onChange={(e) => setShortDescription(e.target.value)}
-                  value={shortDescription}
+                  onChange={(e) => setDescription(e.target.value)}
+                  value={description}
                   type="text"
-                  name="shortDescription"
+                  name="description"
                   className="block w-2/3 rounded-md"
-                  id="shortDescription"
+                  id="description"
                   minLength="4"
                   maxLength="100"
                   size="80"
                 />
               </div>
+            </div>
 
-
-              <div className="mt-4">
-                <label
-                  htmlFor="text"
-                  className="block text-sm font-medium text-gray-400 "
-                >
-                  description
-                </label>
-                <div className="flex flex-col items-start">
-                  <input
-                    onChange={(e) => setDescription(e.target.value)}
-                    value={description}
-                    type="text"
-                    name="description"
-                    className="block w-2/3 rounded-md"
-                    id="description"
-                    minLength="4"
-                    maxLength="100"
-                    size="80"
-                  />
-                </div>
-              </div>
-
-           
             <div className="mt-4">
               <label
                 htmlFor="text"
@@ -216,7 +220,6 @@ function Admin() {
                 />
               </div>
             </div>
-
 
             <div className="mt-4">
               <label
@@ -237,7 +240,6 @@ function Admin() {
               </div>
             </div>
 
-
             <div className="mt-4">
               <label
                 htmlFor="text"
@@ -257,7 +259,6 @@ function Admin() {
               </div>
             </div>
 
-
             <div className="mt-4">
               <label
                 htmlFor="text"
@@ -274,9 +275,8 @@ function Admin() {
                   className=" block w-2/3 rounded-md"
                   id="studio"
                 />
-              </div>              
+              </div>
             </div>
-
 
             <div className="mt-4">
               <label
@@ -294,9 +294,8 @@ function Admin() {
                   className=" block w-2/3 rounded-md"
                   id="genre"
                 />
-              </div>              
+              </div>
             </div>
-
 
             <div className="mt-4">
               <label
@@ -316,7 +315,7 @@ function Admin() {
                 />
               </div>
             </div>
-            
+
             <button
               type="button"
               className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
@@ -328,53 +327,47 @@ function Admin() {
           </form>
         </div>
 
-
-
         <div className="px-6 py-4 mt-10 m-5 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg w-full min-h-800">
           <form className="bg-gray-800 " onSubmit={handleUpdate}>
             <div className="bg">
-
-
-            <div className="mt-4">
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium text-gray-400 undefined"
-              >
-                résumé
-              </label>
-              <div className="flex flex-col items-start">
-                <input
-                  onChange={(e) => setShortDescription(e.target.value)}
-                  value={shortDescription}
-                  type="text"
-                  name="shortDescription"
-                  className="block w-2/3 rounded-md"
-                  id="shortDescription"
-                />
-              </div>
+              <div className="mt-4">
+                <label
+                  htmlFor="text"
+                  className="block text-sm font-medium text-gray-400 undefined"
+                >
+                  résumé
+                </label>
+                <div className="flex flex-col items-start">
+                  <input
+                    onChange={(e) => setShortDescription(e.target.value)}
+                    value={shortDescription}
+                    type="text"
+                    name="shortDescription"
+                    className="block w-2/3 rounded-md"
+                    id="shortDescription"
+                  />
+                </div>
               </div>
 
-
-            <div className="mt-4">
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium text-gray-400 undefined"
-              >
-                Description
-              </label>
-              <div className="flex flex-col items-start">
-                <input
-                  onChange={(e) => setDescription(e.target.value)}
-                  value={description}
-                  type="text"
-                  name="description"
-                  className="block w-2/3 rounded-md"
-                  id="description"
-                />
-              </div>
+              <div className="mt-4">
+                <label
+                  htmlFor="text"
+                  className="block text-sm font-medium text-gray-400 undefined"
+                >
+                  Contenu de l'article
+                </label>
+                <div className="flex flex-col items-start ">
+                  <textarea
+                    onChange={(e) => setDescription(e.target.value)}
+                    value={description}
+                    type="text"
+                    name="description"
+                    className="block w-2/3 rounded-md h-auto py-2 px-3 resize-y"
+                    id="description"
+                  />
+                </div>
               </div>
             </div>
-
 
             <div className="mt-4">
               <label
@@ -395,7 +388,6 @@ function Admin() {
               </div>
             </div>
 
-
             <div className="mt-4">
               <label
                 htmlFor="text"
@@ -414,7 +406,6 @@ function Admin() {
                 />
               </div>
             </div>
-
 
             <div className="mt-4">
               <label
@@ -435,7 +426,6 @@ function Admin() {
               </div>
             </div>
 
-
             <div className="mt-4">
               <label
                 htmlFor="text"
@@ -454,7 +444,6 @@ function Admin() {
                 />
               </div>
             </div>
-
 
             <div className="mt-4">
               <label
@@ -475,7 +464,6 @@ function Admin() {
               </div>
             </div>
 
-
             <div className="mt-4">
               <label
                 htmlFor="text"
@@ -494,7 +482,6 @@ function Admin() {
                 />
               </div>
             </div>
-
 
             <div className="mt-4">
               <label
@@ -531,8 +518,6 @@ function Admin() {
         </div>
         <div className="w-full px-6 py-4 lg:min-w-500 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
           <form className="bg-gray-800 " onSubmit={handleUpdate}>
-
-
             <div className="mt-4">
               <label
                 htmlFor="titre"
