@@ -76,7 +76,7 @@ function Admin() {
   };
 
   const handleUpdate = (err) => {
-    err.preventDefault();
+     err.preventDefault();
     if (
       shortDescription &&
       description &&
@@ -102,7 +102,7 @@ function Admin() {
         })
         .catch((err) => console.log(err.response.data));
     else {
-      alert("Please specify a description, a price  a password and a title");
+      alert("veuillez controller si tous les champs sont à jour");
     }
   };
 
@@ -132,9 +132,9 @@ function Admin() {
     const selectedProduct = productData.find(
       (product) => product.id === parseInt(e.target.value, 10)
     );
-    console.log(selectedProduct);
+    
     if (selectedProduct) {
-      setShortDescription(selectedProduct.shortDescription);
+      setShortDescription(selectedProduct.short_description);
       setDescription(selectedProduct.description);
       setPrice(selectedProduct.price);
       setPhoto(selectedProduct.photo);
@@ -149,7 +149,7 @@ function Admin() {
     setDeleteId(e.target.value);
   };
 
-  console.log(productData);
+  
 
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-500 min-h-full">
@@ -354,15 +354,15 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 undefined"
                 >
-                  Description
+                  Contenu de l'article
                 </label>
-                <div className="flex flex-col items-start">
-                  <input
+                <div className="flex flex-col items-start ">
+                  <textarea
                     onChange={(e) => setDescription(e.target.value)}
                     value={description}
                     type="text"
                     name="description"
-                    className="block w-2/3 rounded-md"
+                    className="block w-2/3 rounded-md h-auto py-2 px-3 resize-y"
                     id="description"
                   />
                 </div>
