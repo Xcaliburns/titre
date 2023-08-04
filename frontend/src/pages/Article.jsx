@@ -3,14 +3,17 @@ import CallApi from "../Services/CallApi";
 import Navbar from "../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUserContext } from "../context/UserContext";
+
 
 function Article() {
   const [article, setArticle] = useState([]);
   const [commentsData, setCommentsData] = useState([]);
   const articleId = localStorage.getItem("singleProductId");
-  const userId = localStorage.getItem("userId");
   const [commentText, setCommentText] = useState("");
   const [addedComment, setAddedComment] = useState(false);
+
+  const { user } = useUserContext();
 
   useEffect(() => {
     CallApi.get(`/api/product/${articleId}`)
@@ -37,10 +40,10 @@ function Article() {
   };
 
   const handleAddComment = () => {
-    if (commentText.length > 2) {
+    if ( commentText.length > 2) {
       const newComment = {
         product_id: articleId,
-        user_id: userId,
+        user_id: user.userId,
         text: commentText,
       };
 
@@ -52,7 +55,7 @@ function Article() {
           setAddedComment(!addedComment);
           toast.success("🦄 merci pour votre commentaire!", {
             position: "top-center",
-            autoClose: 4000, // 4 seconds
+            autoClose: 4000, 
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -65,7 +68,7 @@ function Article() {
           console.err("Error adding comment:", err);
           toast.error("❌ Échec lors de l'ajout du commentaire.", {
             position: "top-center",
-            autoClose: 4000, // 4 seconds
+            autoClose: 4000, 
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -97,7 +100,7 @@ function Article() {
       </div>
 
       <div className="w-full mt-4 p-4 rounded-lg bg-gray-700 neon-border">
-        <div className="mb-4">
+        {user &&(<div className="mb-4">
           <textarea
             rows="1"
             value={commentText}
@@ -112,7 +115,7 @@ function Article() {
             Add Comment
           </button>
           <ToastContainer />
-        </div>
+        </div>)}
 
         <div className="commentList grid gap-2">
           {Array.isArray(commentsList) && commentsList.length > 0 ? (

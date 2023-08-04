@@ -140,7 +140,7 @@ function Admin() {
     setDeleteId(e.target.value);
   };
 
-  console.log(`${shortDescription}, ${description}, ${price}, ${photo}, ${title}, ${studio}, ${genre}, ${release}`);
+  
 
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-500 min-h-full">

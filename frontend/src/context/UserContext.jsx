@@ -8,7 +8,7 @@ export function CurrentUserContextProvider({ children }) {
 
   
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) ); 
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))|| { role: "user" }; 
   
   return (
 
