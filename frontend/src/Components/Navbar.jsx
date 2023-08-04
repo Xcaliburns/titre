@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CallApi from "../services/CallApi";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
@@ -12,12 +13,17 @@ export default function NavBar() {
 
   const logout = (e) => {
     e.preventDefault();
-    localStorage.removeItem("user");
-    // localStorage.setItem("user", JSON.stringify());
-    setUser(JSON.parse(localStorage.getItem("user")));
-    alert("vous avez été déconnecté");
-    navigate("/");
+    CallApi
+      .get("/api/logout")
+      .then(() => {
+        localStorage.removeItem("user");
+        setUser(JSON.parse(localStorage.getItem("user")));
+        alert("vous avez été déconnecté");
+        navigate("/");
+      })
+      .catch((err) => console.error(err))
   };
+ 
 
   return (
     <nav className="w-full bg-dark shadow h-24 ">
