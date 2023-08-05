@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 function Admin() {
   const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState([]);
+  const [price, setPrice] = useState("");
   const [photo, setPhoto] = useState("");
   const [title, setTitle] = useState("");
   const [studio, setStudio] = useState("");
@@ -49,7 +49,7 @@ function Admin() {
         .then(() => {
           setShortDescription("");
           setDescription("");
-          setPrice([]);
+          setPrice("");
           setPhoto("");
           setTitle("");
           setProductId("");
@@ -76,7 +76,7 @@ function Admin() {
   };
 
   const handleUpdate = (err) => {
-     err.preventDefault();
+    err.preventDefault();
     if (
       shortDescription &&
       description &&
@@ -98,11 +98,19 @@ function Admin() {
         release,
       })
         .then(() => {
+          setShortDescription("");
+          setDescription("");
+          setPrice("");
+          setPhoto("");
+          setTitle("");          
+          setStudio("");
+          setGenre("");
+          setRelease("");
           toast.success("Article mis à jour avec succès !");
         })
         .catch((err) => console.log(err.response.data));
     else {
-      alert("veuillez controller si tous les champs sont à jour");
+      alert("veuillez controller si tous les champs sont à jour et que Price contient 2chiffres au moins  ");
     }
   };
 
@@ -111,10 +119,15 @@ function Admin() {
     if (deleteId) {
       CallApi.delete(`/api/product/${deleteId}`)
         .then(() => {
-          toast.success("Produit supprimé avec succès !", {
-            position: "center",
-            autoClose: 5000,
+          toast.success("🦄 article supprimé avec succès!", {
+            position: "top-center",
+            autoClose: 4,
             hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
           });
         })
         .catch((err) => console.log(err.response.data));
@@ -132,7 +145,7 @@ function Admin() {
     const selectedProduct = productData.find(
       (product) => product.id === parseInt(e.target.value, 10)
     );
-    
+
     if (selectedProduct) {
       setShortDescription(selectedProduct.short_description);
       setDescription(selectedProduct.description);
@@ -142,6 +155,7 @@ function Admin() {
       setStudio(selectedProduct.studio);
       setGenre(selectedProduct.genre);
       setRelease(selectedProduct.release);
+      console.log(typeof selectedProduct.price);
     }
   };
 
@@ -149,10 +163,8 @@ function Admin() {
     setDeleteId(e.target.value);
   };
 
-  
-
   return (
-    <div className="flex flex-col  items-center text-xl bg-gray-500 min-h-full">
+    <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
       <Navbar />
 
       <div className="flex flex-col lg:flex-row">
@@ -318,7 +330,7 @@ function Admin() {
 
             <button
               type="button"
-              className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
+              className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
               onClick={handleSubmit}
             >
               Creer
@@ -494,23 +506,25 @@ function Admin() {
                 value={productId}
                 onChange={handleProductChange}
                 className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
-              >
-                {productData.map((product) => (
-                  <option
-                    className="text-black"
-                    value={product.id}
-                    key={product.id}
-                  >
-                    {product.title}
-                  </option>
-                ))}
+              > <option value="">---</option>
+                {productData
+                  .slice()
+                  .sort((a, b) => a.title.localeCompare(b.title))
+                  .map((product) => (
+                    <option
+                      className="text-black"
+                      value={product.id}
+                      key={product.id}
+                    >
+                      {product.title}
+                    </option>
+                  ))}
               </select>
-              {/* <option value="">---</option> */}
             </div>
             <button
               type="submit"
               onClick={handleUpdate}
-              className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
+              className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
             >
               Update
             </button>
@@ -544,11 +558,11 @@ function Admin() {
             <button
               type="submit"
               onClick={handleDelete}
-              className="inline-flex items-center px-4 py-2 m-4 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-red-500"
+              className="inline-flex items-center px-4 py-2 m-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-red-500"
             >
               Effacer
             </button>
-            <ToastContainer />
+            
           </form>
         </div>
       </div>

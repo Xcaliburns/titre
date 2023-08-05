@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -35,7 +36,7 @@ function MySlider({ data }) {
 
   console.log(data);
   return (
-    <div className="max-w-xl mx-auto border-4 border-red-600 rounded-md">
+    <div className="  border-4 border-red-600 rounded-md">
       
       <Slider {...settings}>
         {data.slice(-3).map((item) => (
@@ -43,20 +44,20 @@ function MySlider({ data }) {
             key={item.id}
             className="relative h-auto max-w-48 w-full items-center  bg-grey-50 rounded-md shadow-sm shadow-red-600/100"
           >
-            <div className=" absolute top-0 left-0 text-white w-full h-full text-5xl   ">a l'affiche</div>
+            <div className=" absolute top-0 left-0 text-gray-100 w-full h-full text-5xl   ">a l'affiche</div>
             <img
               className="w-full h-auto object-cover  rounded-md"
               src={item.photo}
               alt={item.title}
             />
-            <div className="absolute bottom-0 left-0 w-full bg-gray-900 p-4 text-white">
+            <div className="absolute bottom-0 left-0 w-full bg-gray-900 p-4 text-gray-100">
             <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
               <div className="flex flex-row justify-between items-center align-center">
                 <p className="line-clamp-1">{item.description}</p>
               <button
                 type="button"
                 onClick={() => stockId(item.id)}
-                className=" flex-shrink-0 inline-flex items-center px-4 py-2 mt-1 ml-4 text-xs font-semibold tracking-widest text-white text-lg uppercase transition duration-150 ease-in-out bg-gray-600 border border-transparent rounded-md active:bg-gray-600 false hover:bg-blue-500"
+                className=" flex-shrink-0 inline-flex items-center px-4 py-2 mt-1 ml-4 text-xs font-semibold tracking-widest text-gray-100 text-lg uppercase transition duration-150 ease-in-out bg-gray-600 border border-transparent rounded-md active:bg-gray-600 false hover:bg-blue-500"
               >
                 voir l'article
               </button></div>

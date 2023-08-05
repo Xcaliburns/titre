@@ -13,38 +13,39 @@ export default function NavBar() {
 
   const logout = (e) => {
     e.preventDefault();
-    CallApi
-      .get("/api/logout")
+    CallApi.get("/api/logout")
       .then(() => {
         localStorage.removeItem("user");
         setUser(JSON.parse(localStorage.getItem("user")));
         alert("vous avez été déconnecté");
         navigate("/");
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.error(err));
   };
- 
 
   return (
-    <nav className="w-full bg-dark shadow-xl shadow-blue-200 h-24 rounded-md ">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 ">
-        <div className="flex items-center  py-3 md:py-5">
-          <h2 className="text-2xl font-bold text-white">InDéJouable</h2>
-          <div className="md:hidden">
-            {isMenuOpen ? (
-              <FaTimes
-                className="text-white text-3xl cursor-pointer"
-                onClick={() => setIsMenuOpen(false)}
-              />
-            ) : (
-              <FaBars
-                className="text-white text-3xl cursor-pointer"
-                onClick={() => setIsMenuOpen(true)}
-              />
-            )}
-          </div>
+    <nav className="w-full bg-gray-600 shadow-xl shadow-blue-200 h-24 rounded-md z-50 text-gray-100">
+      <div className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-8 pt-8">
+       
+        <div>
+          <h2 className="text-2xl  font-bold ">InDéJouable</h2>
+          <p className="">pour les passionés de jeux indés</p>
         </div>
-        <nav className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:text-xl text-gray-100 justify-center pb-4">
+        <div className="md:hidden flex items-center pr-4 ">
+          {isMenuOpen ? (
+            <FaTimes
+              className="flex   text-3xl cursor-pointer "
+              onClick={() => setIsMenuOpen(false)}
+            />
+          ) : (
+            <FaBars
+              className="flex   text-3xl cursor-pointer "
+              onClick={() => setIsMenuOpen(true)}
+            />
+          )}
+        </div>
+        
+        <nav className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:pt-6 md:text-xl  justify-center pb-4">
           <div className="hover:text-green-300">
             <NavLink to="/">Accueil</NavLink>
           </div>
@@ -58,7 +59,7 @@ export default function NavBar() {
             <NavLink to="/signup">Inscription</NavLink>
           </div>
           <div className="flex flex-row">
-            <div className="hover:text-red-900">
+            <div className="hover:text-red-700">
               <button className="" type="button" onClick={logout}>
                 Logout
               </button>
@@ -73,34 +74,34 @@ export default function NavBar() {
       </div>
       {/* Responsive menu items */}
       <div
-        className={`md:hidden bg-dark shadow transform ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        className={`md:hidden bg-black  shadow transform ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >
-        <div className="px-4 py-2">
+        <div className="flex flex-col items-center">
           <NavLink
             to="/"
-            className="block text-white hover:text-green-300 py-2"
+            className="block  hover:text-green-300 py-2"
           >
             Accueil
           </NavLink>
           <div className="hover:text-green-300">
             <NavLink
               to="/search"
-              className="block text-white hover:text-green-300 py-2"
+              className="block  hover:text-green-300 py-2"
             >
               recherche
             </NavLink>
           </div>
           <NavLink
             to="/login"
-            className="block text-white hover:text-green-300 py-2"
+            className="block hover:text-green-300 py-2"
           >
             Login
           </NavLink>
           <NavLink
             to="/signup"
-            className="block text-white hover:text-green-300 py-2"
+            className="block  hover:text-green-300 py-2"
           >
             Inscription
           </NavLink>
@@ -108,13 +109,13 @@ export default function NavBar() {
           {user && user.email === adminLog && (
             <NavLink
               to="/admin"
-              className="block text-white hover:text-green-300 py-2"
+              className="block  hover:text-green-300 py-2"
             >
               Admin
             </NavLink>
           )}
           <button
-            className="block text-white hover:text-red-900 py-2"
+            className="block  hover:text-red-900 py-2"
             onClick={logout}
           >
             Logout
