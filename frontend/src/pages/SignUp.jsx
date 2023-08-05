@@ -66,7 +66,7 @@ function SignUp() {
             id="password"
           />
         </div>
-        <button type="submit" className="inline-flex items-center px-4 py-2 mt-4 ml-1 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500">
+        <button type="submit" className="inline-flex items-center px-4 py-2 mt-4 ml-1 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500">
           Inscription
         </button>
       </form>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import CallApi from "../services/CallApi";
 import Navbar from "../components/Navbar";
 import ProductCard from "../Components/productCard";
+
 function Search() {
   const [productData, setProductData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,12 +36,16 @@ function Search() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("searchTerm", searchTerm);
-    productsList();
+    if(searchTerm && searchTerm.length>0)
+    {localStorage.setItem("searchTerm", searchTerm);
+    productsList();}
   };
+  const setSearch= (e)=>{
+    setSearchTerm(e.target.value)
+  }
 
   return (
-    <div className="flex flex-col  items-center text-xl bg-gray-500 min-h-full">
+    <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
       <Navbar />
       <div className="flex flex-col lg:flex-row">
         <div className="w-full px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
@@ -55,7 +60,7 @@ function Search() {
               <div className="flex flex-col items-start">
                 <input
                   ref={searchInputRef}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={setSearch} 
                   value={searchTerm}
                   type="text"
                   name="searchTerm"
@@ -66,7 +71,7 @@ function Search() {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
+              className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
               onClick={handleSubmit}
             >
               rechercher
@@ -74,17 +79,13 @@ function Search() {
           </form>
         </div>
       </div>
-      <div className="flex flex-wrap justify-center rounded border-x-2 ">
+      <div className="flex flex-wrap justify-center rounded ">
         {Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <ProductCard
               className=""
               key={product.id}
-              photo={product.photo}
-              description={product.description}
-              price={product.price}
-              title={product.title}
-              id={product.id}
+             product={product}
             />
           ))
         ) : (
