@@ -28,8 +28,8 @@ export default function NavBar() {
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-8 pt-8">
        
         <div>
-          <h2 className="text-2xl  font-bold ">InDéJouable</h2>
-          <p className="">pour les passionés de jeux indés</p>
+          <h2 className=" flex flex-row text-2xl  font-bold "><p>{`InDé `} </p> <p className="text-blue-400">{` Jouable`}</p></h2>
+          <p className="">pour les passionnés de jeux indés</p>
         </div>
         <div className="md:hidden flex items-center pr-4 ">
           {isMenuOpen ? (
