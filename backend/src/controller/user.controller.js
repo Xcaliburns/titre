@@ -25,9 +25,9 @@ const createOne = async (req, res) => {
 
     const hashedPassword = await hashPassword(req.body.password);
 
-    const result = await addOne ({...req.body, password: hashedPassword});  //injecte le hashedPassword dans la bdd
+    const result = await addOne ({...req.body, password: hashedPassword});  
 
-    res.status(201).send (result);  // renvoie le result de la ligne 25 du user.model.js
+    res.status(201).send (result);  
 
   } catch {
     res.sendStatus(500);

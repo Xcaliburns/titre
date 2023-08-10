@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CallApi from "../services/CallApi";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
@@ -9,6 +9,7 @@ export default function NavBar() {
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [logged, setLogged] = useState("");
   const adminLog = import.meta.env.VITE_ADMIN_LOGIN;
 
   const logout = (e) => {
@@ -18,18 +19,31 @@ export default function NavBar() {
         localStorage.removeItem("user");
         setUser(JSON.parse(localStorage.getItem("user")));
         alert("vous avez été déconnecté");
+        localStorage.setItem("logged", JSON.stringify(false));
+        setLogged(false);
         navigate("/");
       })
       .catch((err) => console.error(err));
   };
 
+  useEffect(() => {
+    setLogged(JSON.parse(localStorage.getItem("logged")));
+  }, []);
+
   return (
     <nav className="w-full bg-gray-600 shadow-xl shadow-blue-200 h-24 rounded-md z-50 text-gray-100">
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-8 pt-8">
-       
         <div>
-          <h2 className=" flex flex-row text-2xl  font-bold "><p>{`InDé `} </p> <p className="text-blue-400">{` Jouable`}</p></h2>
-          <p className="">pour les passionnés de jeux indés</p>
+          <NavLink to="/">
+            {" "}
+            <a>
+              <h2 className=" flex flex-row text-2xl  font-bold ">
+                <p>{`InDé `} </p> <p className="text-blue-400">{` Jouable`}</p>
+              </h2>
+
+              <p className="">pour les passionnés de jeux indés</p>
+            </a>
+          </NavLink>
         </div>
         <div className="md:hidden flex items-center pr-4 ">
           {isMenuOpen ? (
@@ -44,7 +58,7 @@ export default function NavBar() {
             />
           )}
         </div>
-        
+
         <nav className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:pt-6 md:text-xl  justify-center pb-4">
           <div className="hover:text-green-300">
             <NavLink to="/">Accueil</NavLink>
@@ -52,18 +66,26 @@ export default function NavBar() {
           <div className="hover:text-green-300">
             <NavLink to="/search">recherche</NavLink>
           </div>
-          <div className="hover:text-green-300">
-            <NavLink to="/login">Login</NavLink>
-          </div>
-          <div className="hover:text-green-300">
-            <NavLink to="/signup">Inscription</NavLink>
-          </div>
-          <div className="flex flex-row">
-            <div className="hover:text-red-700">
-              <button className="" type="button" onClick={logout}>
-                Logout
-              </button>
+
+          {logged === false && (
+            <div className="hover:text-green-300">
+              <NavLink to="/login">Login</NavLink>
             </div>
+          )}
+
+          {logged === false && (
+            <div className="hover:text-green-300">
+              <NavLink to="/signup">Inscription</NavLink>
+            </div>
+          )}
+          <div className="flex flex-row">
+            {logged === true && (
+              <div className="hover:text-red-700">
+                <button className="" type="button" onClick={logout}>
+                  Logout
+                </button>
+              </div>
+            )}
             <div className="hover:text-green-300 ml-2">
               {user && user.email === adminLog && (
                 <NavLink to="/admin">Admin</NavLink>
@@ -79,47 +101,38 @@ export default function NavBar() {
         } transition-transform duration-300`}
       >
         <div className="flex flex-col items-center">
-          <NavLink
-            to="/"
-            className="block  hover:text-green-300 py-2"
-          >
+          <NavLink to="/" className="block  hover:text-green-300 py-2">
             Accueil
           </NavLink>
           <div className="hover:text-green-300">
-            <NavLink
-              to="/search"
-              className="block  hover:text-green-300 py-2"
-            >
+            <NavLink to="/search" className="block  hover:text-green-300 py-2">
               recherche
             </NavLink>
           </div>
-          <NavLink
-            to="/login"
-            className="block hover:text-green-300 py-2"
-          >
-            Login
-          </NavLink>
-          <NavLink
-            to="/signup"
-            className="block  hover:text-green-300 py-2"
-          >
-            Inscription
-          </NavLink>
+          {logged === false && (
+            <div className="hover:text-green-300">
+              <NavLink to="/login">Login</NavLink>
+            </div>
+          )}
+        {logged === false && (
+            <div className="hover:text-green-300">
+              <NavLink to="/signup">Inscription</NavLink>
+            </div>
+          )}
 
           {user && user.email === adminLog && (
-            <NavLink
-              to="/admin"
-              className="block  hover:text-green-300 py-2"
-            >
+            <NavLink to="/admin" className="block  hover:text-green-300 ">
               Admin
             </NavLink>
           )}
-          <button
-            className="block  hover:text-red-900 py-2"
-            onClick={logout}
-          >
-            Logout
-          </button>
+           {logged === true && (
+              <div className="hover:text-red-700">
+                <button className="" type="button" onClick={logout}>
+                  Logout
+                </button>
+              </div>
+            )}
+           
         </div>
       </div>
     </nav>

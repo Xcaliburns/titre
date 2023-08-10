@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const[logged, setLogged] = useState(false);
 
   const { setUser } = useUserContext();
 
@@ -23,7 +24,8 @@ function Login() {
 
           localStorage.setItem("user", JSON.stringify(userOnline));
           setUser(JSON.parse(localStorage.getItem("user")));
-
+          localStorage.setItem("logged", JSON.stringify(true));
+          setLogged(true)
           navigate("/");
         })
         .catch((err) => console.error("Erreur : ", err));
