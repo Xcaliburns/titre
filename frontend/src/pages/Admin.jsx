@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CallApi from "../services/CallApi";
 import Navbar from "../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
@@ -16,12 +16,26 @@ function Admin() {
 
   const [productId, setProductId] = useState("");
   const [deleteId, setDeleteId] = useState("");
+  const [action, setAction] = useState("");
 
-  useEffect(() => {
+  
+  const gameList = () => {
     CallApi.get("/api/product")
-      .then((res) => setProductData(res.data))
-      .catch((err) => console.error(err));
-  }, [productId]);
+    .then((res) => setProductData(res.data))
+    .catch((err) => console.error(err));
+  }
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    gameList();
+    setAction("update");
+  }
+
+  const handleErase = (e) => {
+    e.preventDefault();
+    gameList ();
+    setAction("delete");
+      }
 
   const handleSubmit = () => {
     setProductId(productId);
@@ -102,7 +116,7 @@ function Admin() {
           setDescription("");
           setPrice("");
           setPhoto("");
-          setTitle("");          
+          setTitle("");
           setStudio("");
           setGenre("");
           setRelease("");
@@ -110,7 +124,9 @@ function Admin() {
         })
         .catch((err) => console.log(err.response.data));
     else {
-      alert("veuillez controller si tous les champs sont à jour et que Price contient 2chiffres au moins  ");
+      alert(
+        "veuillez controller si tous les champs sont à jour et que Price contient 2chiffres au moins  "
+      );
     }
   };
 
@@ -128,7 +144,9 @@ function Admin() {
             draggable: true,
             progress: undefined,
             theme: "colored",
-          });
+          }
+          );
+          setAction("");
         })
         .catch((err) => console.log(err.response.data));
     } else {
@@ -154,8 +172,7 @@ function Admin() {
       setTitle(selectedProduct.title);
       setStudio(selectedProduct.studio);
       setGenre(selectedProduct.genre);
-      setRelease(selectedProduct.release);
-      console.log(typeof selectedProduct.price);
+      setRelease(selectedProduct.release);     
     }
   };
 
@@ -167,9 +184,56 @@ function Admin() {
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
       <Navbar />
 
+      <div>
+        
+        <button
+          type="button"
+          className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
+          onClick={() => setAction("creation")}
+        >
+          Creer
+        </button>
+        
+       
+        <button
+          type="button"
+          className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
+          onClick={handleChange}
+        >
+          Modifier
+        </button>
+        
+       
+        <button
+          type="button"
+          className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
+          onClick={handleErase}
+        >
+          Supprimer
+        </button>
+      </div>
+
       <div className="flex flex-col lg:flex-row">
-        <div className="w-full px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
+       {action === "creation" && <div className="w-full px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md rounded-lg">
           <form className="bg-gray-800 " onSubmit={handleSubmit}>
+          <div className="mt-4">
+              <label
+                htmlFor="text"
+                className="block text-sm font-medium text-gray-400 "
+              >
+                titre
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  onChange={(e) => setTitle(e.target.value)}
+                  value={title}
+                  type="text"
+                  name="title"
+                  className=" block w-2/3 rounded-md"
+                  id="title"
+                />
+              </div>
+            </div>
             <div className="mt-4">
               <label
                 htmlFor="text"
@@ -252,24 +316,7 @@ function Admin() {
               </div>
             </div>
 
-            <div className="mt-4">
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium text-gray-400 "
-              >
-                titre
-              </label>
-              <div className="flex flex-col items-start">
-                <input
-                  onChange={(e) => setTitle(e.target.value)}
-                  value={title}
-                  type="text"
-                  name="title"
-                  className=" block w-2/3 rounded-md"
-                  id="title"
-                />
-              </div>
-            </div>
+           
 
             <div className="mt-4">
               <label
@@ -337,15 +384,62 @@ function Admin() {
             </button>
             <ToastContainer />
           </form>
-        </div>
+        </div>}
 
-        <div className="px-6 py-4 mt-10 m-5 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg w-full min-h-800">
+        {action === "update" && <div className="px-6 py-4 mt-10 m-5 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg w-full min-h-800">
           <form className="bg-gray-800 " onSubmit={handleUpdate}>
             <div className="bg">
+
+            <div className="mt-4">
+              <label
+                htmlFor="titre"
+                className="block text-sm font-medium text-gray-400 "
+              >
+                Titre à modifier
+              </label>
+              <select
+                value={productId}
+                onChange={handleProductChange}
+                className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
+              >
+                {" "}
+                <option value="">---</option>
+                {productData
+                  .slice()
+                  .sort((a, b) => a.title.localeCompare(b.title))
+                  .map((product) => (
+                    <option
+                      className="text-black"
+                      value={product.id}
+                      key={product.id}
+                    >
+                      {product.title}
+                    </option>
+                  ))}
+              </select>
+            </div>
               <div className="mt-4">
+              
+              <label
+                htmlFor="text"
+                className="block text-sm font-medium text-gray-400 "
+              >
+                Titre
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  onChange={(e) => setTitle(e.target.value)}
+                  value={title}
+                  type="text"
+                  name="titre"
+                  className=" block w-2/3 rounded-md"
+                  id="photo"
+                />
+             
+            </div>
                 <label
                   htmlFor="text"
-                  className="block text-sm font-medium text-gray-400 undefined"
+                  className="block text-sm font-medium text-gray-400  mt-4"
                 >
                   résumé
                 </label>
@@ -419,24 +513,7 @@ function Admin() {
               </div>
             </div>
 
-            <div className="mt-4">
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium text-gray-400 "
-              >
-                Titre
-              </label>
-              <div className="flex flex-col items-start">
-                <input
-                  onChange={(e) => setTitle(e.target.value)}
-                  value={title}
-                  type="text"
-                  name="titre"
-                  className=" block w-2/3 rounded-md"
-                  id="photo"
-                />
-              </div>
-            </div>
+           
 
             <div className="mt-4">
               <label
@@ -495,32 +572,7 @@ function Admin() {
               </div>
             </div>
 
-            <div className="mt-4">
-              <label
-                htmlFor="titre"
-                className="block text-sm font-medium text-gray-400 "
-              >
-                titre
-              </label>
-              <select
-                value={productId}
-                onChange={handleProductChange}
-                className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
-              > <option value="">---</option>
-                {productData
-                  .slice()
-                  .sort((a, b) => a.title.localeCompare(b.title))
-                  .map((product) => (
-                    <option
-                      className="text-black"
-                      value={product.id}
-                      key={product.id}
-                    >
-                      {product.title}
-                    </option>
-                  ))}
-              </select>
-            </div>
+           
             <button
               type="submit"
               onClick={handleUpdate}
@@ -529,8 +581,8 @@ function Admin() {
               Update
             </button>
           </form>
-        </div>
-        <div className="w-full px-6 py-4 lg:min-w-500 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
+        </div>}
+        {action === "delete" &&<div className="w-full px-6 py-4 lg:min-w-500 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
           <form className="bg-gray-800 " onSubmit={handleUpdate}>
             <div className="mt-4">
               <label
@@ -543,7 +595,7 @@ function Admin() {
                 value={deleteId}
                 onChange={handleDeleteId}
                 className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3"
-              >
+              > <option value="">---</option>
                 {productData.map((product) => (
                   <option
                     className="text-black"
@@ -562,9 +614,8 @@ function Admin() {
             >
               Effacer
             </button>
-            
           </form>
-        </div>
+        </div>}
       </div>
     </div>
   );
