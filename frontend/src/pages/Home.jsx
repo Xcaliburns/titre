@@ -1,15 +1,17 @@
 import CallApi from "../Services/CallApi";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
+
 import Navbar from "../Components/Navbar";
 import MySlider from "../Components/MySlider";
 import ProductCard from "../Components/productCard";
 
 function Home() {
   const [product, setProduct] = useState([]);
-  const { user } = useUserContext();
+  const { user,setUser } = useUserContext();
 
   useEffect(() => {
+    if(!user){setUser("");}
     CallApi.get("/api/product")
       .then((res) => setProduct(res.data))
       .catch((err) => console.error(err));

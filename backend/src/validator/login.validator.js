@@ -6,7 +6,6 @@ const validateLogin = (user) => {
     password: Joi.string().min(8).max(30).presence("required"),
   })
     .required()
-    //.min(1)
     .validate(user, { abortEarly: false }).error;
 
   if (result) {

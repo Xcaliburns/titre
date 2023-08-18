@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const[logged, setLogged] = useState(false);
+  const[logged, setLogged] = useState("");
 
   const { setUser } = useUserContext();
 

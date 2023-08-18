@@ -89,10 +89,8 @@ const updateOne = async function (product) {
 
 const deleteOne = async function (productId) {
   try {
-    
     await db.query(`DELETE FROM comment WHERE product_id = ?`, [productId]);
 
-    
     const result = await db.query(`DELETE FROM product WHERE id = ?`, [
       productId,
     ]);
@@ -101,6 +99,5 @@ const deleteOne = async function (productId) {
     throw new Error(`Impossible de supprimer le produit : ${error}`);
   }
 };
-
 
 module.exports = { findAll, findOne, addOne, updateOne, deleteOne };
