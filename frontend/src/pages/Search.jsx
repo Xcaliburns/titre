@@ -9,7 +9,6 @@ function Search() {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const searchInputRef = useRef(null);
-  
 
   useEffect(() => {
     CallApi.get("/api/product")
@@ -17,11 +16,9 @@ function Search() {
       .catch((err) => console.error(err));
     setSearchTerm(localStorage.getItem("searchTerm"));
     searchInputRef.current.focus();
-    
   }, []);
 
   const productsList = () => {
-     
     setFilteredProducts(
       productData.filter((product) => {
         const lowerSearchTerm = searchTerm.toLowerCase();
@@ -36,13 +33,14 @@ function Search() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(searchTerm && searchTerm.length>0)
-    {localStorage.setItem("searchTerm", searchTerm);
-    productsList();}
+    if (searchTerm && searchTerm.length > 0) {
+      localStorage.setItem("searchTerm", searchTerm);
+      productsList();
+    }
   };
-  const setSearch= (e)=>{
-    setSearchTerm(e.target.value)
-  }
+  const setSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
@@ -60,7 +58,7 @@ function Search() {
               <div className="flex flex-col items-start">
                 <input
                   ref={searchInputRef}
-                  onChange={setSearch} 
+                  onChange={setSearch}
                   value={searchTerm}
                   type="text"
                   name="searchTerm"
@@ -81,13 +79,12 @@ function Search() {
       </div>
       <div className="flex flex-wrap justify-center rounded ">
         {Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => (
-            <ProductCard
-              className=""
-              key={product.id}
-             product={product}
-            />
-          ))
+          filteredProducts
+            .slice() 
+            .sort((a, b) => a.title.localeCompare(b.title)) 
+            .map((product) => (
+              <ProductCard className="" key={product.id} product={product} />
+            ))
         ) : (
           <p>Pas de résultats</p>
         )}

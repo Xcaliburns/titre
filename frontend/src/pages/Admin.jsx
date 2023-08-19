@@ -3,6 +3,9 @@ import CallApi from "../services/CallApi";
 import Navbar from "../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import ValidationSchemaProduct from "../Services/ValidationSchemaProduct";
+import * as yup from "yup";
+
 function Admin() {
   const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
@@ -17,6 +20,57 @@ function Admin() {
   const [productId, setProductId] = useState("");
   const [deleteId, setDeleteId] = useState("");
   const [action, setAction] = useState("");
+  const [validationErrors, setValidationErrors] = useState({});
+
+  const ValidationSchemaProduct = yup.object().shape({
+    shortDescription: yup.string().required("Le résumé est requis"),
+    description: yup.string().required("La description est requise"),
+    price: yup
+  .number()
+  .typeError("Le prix doit être un nombre positif avec au plus 2 décimales")
+  .required("Le prix est requis")
+  .test(    
+    (value) => {
+      if (!value) return false; // Handles the required case
+      return /^\d+(\.\d{1,2})?$/.test(value.toString());
+    }
+  ),
+
+    photo: yup.string().required("La photo est requise"),
+    title: yup.string().required("Le titre est requis"),
+    studio: yup.string().required("Le studio est requis"),
+    genre: yup.string().required("Le genre est requis"),
+    release: yup.string().required("La date de sortie est requise"),
+  });
+
+  const fieldsName = {
+    shortDescription,
+    description,
+    price,
+    photo,
+    title,
+    studio,
+    genre,
+    release,
+  };
+
+  const reset = () => {
+    setShortDescription("");
+    setDescription("");
+    setPrice("");
+    setPhoto("");
+    setTitle("");
+    setStudio("");
+    setGenre("");
+    setRelease("");
+  };
+
+  const clearError = (e) => {
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      [e.target.name]: "",
+    }));
+  };
 
   const gameList = () => {
     CallApi.get("/api/product")
@@ -24,108 +78,63 @@ function Admin() {
       .catch((err) => console.error(err));
   };
 
+  const handleCreate = (e) => {
+    e.preventDefault();
+    reset();
+    setAction("creation");
+  };
+
   const handleChange = (e) => {
     e.preventDefault();
+    reset();
     gameList();
     setAction("update");
   };
 
   const handleErase = (e) => {
     e.preventDefault();
+    reset();
     gameList();
     setAction("delete");
   };
 
-  const handleSubmit = () => {
-    setProductId(productId);
+  const handleSubmit = async (err) => {
+    err.preventDefault;
+    try {
+      await ValidationSchemaProduct.validate(fieldsName, { abortEarly: false });
 
-    if (
-      shortDescription &&
-      description &&
-      price &&
-      photo &&
-      title &&
-      studio &&
-      genre &&
-      release
-    ) {
-      CallApi.post("api/product", {
-        shortDescription,
-        description,
-        price,
-        photo,
-        title,
-        studio,
-        genre,
-        release,
-      })
+      CallApi.post("api/product", fieldsName)
         .then(() => {
-          setShortDescription("");
-          setDescription("");
-          setPrice("");
-          setPhoto("");
-          setTitle("");
-          setProductId("");
-          setStudio("");
-          setGenre("");
-          setRelease("");
-
-          toast.success("🦄 article ajouté avec succès!", {
-            position: "top-center",
-            autoClose: 4,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          reset();
+          toast.success("🦄 Article ajouté avec succès!");
         })
 
-        .catch((err) => console.log(err.response.data));
-    } else {
-      alert("Vous ne pouvez pas ajouter le meme article deux fois");
+        .catch((err) => err.response.data);
+    } catch (err) {
+      const errors = {};
+      err.inner.forEach((error) => {
+        errors[error.path] = error.message;
+      });
+      setValidationErrors(errors);
     }
   };
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
-  const handleUpdate = (err) => {
-    err.preventDefault();
-    if (
-      shortDescription &&
-      description &&
-      price &&
-      photo &&
-      title &&
-      studio &&
-      genre &&
-      release
-    )
-      CallApi.put(`/api/product/${productId}`, {
-        shortDescription,
-        description,
-        price,
-        photo,
-        title,
-        studio,
-        genre,
-        release,
-      })
+    try {
+      await ValidationSchemaProduct.validate(fieldsName, { abortEarly: false });
+
+      CallApi.put(`/api/product/${productId}`, fieldsName)
         .then(() => {
-          setShortDescription("");
-          setDescription("");
-          setPrice("");
-          setPhoto("");
-          setTitle("");
-          setStudio("");
-          setGenre("");
-          setRelease("");
           toast.success("Article mis à jour avec succès !");
         })
-        .catch((err) => console.log(err.response.data));
-    else {
-      alert(
-        "veuillez controller si tous les champs sont à jour et que Price contient 2chiffres au moins  "
-      );
+        .catch((err) => err.response.data);
+    } catch (err) {
+      const errors = {};
+      err.inner.forEach((error) => {
+        errors[error.path] = error.message;
+      });
+      setValidationErrors(errors);
     }
   };
 
@@ -134,25 +143,12 @@ function Admin() {
     if (deleteId) {
       CallApi.delete(`/api/product/${deleteId}`)
         .then(() => {
-          toast.success("🦄 article supprimé avec succès!", {
-            position: "top-center",
-            autoClose: 4,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+          toast.success("🦄 article supprimé avec succès!");
           setAction("");
         })
         .catch((err) => console.log(err.response.data));
     } else {
-      toast.error("Erreur lors de la suppression !", {
-        position: "center",
-        autoClose: 5000,
-        hideProgressBar: false,
-      });
+      toast.error("Erreur lors de la suppression !");
     }
   };
 
@@ -182,11 +178,13 @@ function Admin() {
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
       <Navbar />
 
+      <ToastContainer />
+
       <div>
         <button
           type="button"
           className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
-          onClick={() => setAction("creation")}
+          onClick={handleCreate}
         >
           Creer
         </button>
@@ -221,13 +219,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                      clearError(e);
+                    }}
                     value={title}
                     type="text"
                     name="title"
                     className=" block w-2/3 rounded-md"
                     id="title"
                   />
+                  {validationErrors.title && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.title}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="mt-4">
@@ -240,7 +246,10 @@ function Admin() {
               </div>
               <div className="flex flex-col items-start">
                 <input
-                  onChange={(e) => setShortDescription(e.target.value)}
+                  onChange={(e) => {
+                    setShortDescription(e.target.value);
+                    clearError(e);
+                  }}
                   value={shortDescription}
                   type="text"
                   name="shortDescription"
@@ -250,6 +259,11 @@ function Admin() {
                   maxLength="100"
                   size="80"
                 />
+                {validationErrors.shortDescription && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.shortDescription}
+                  </p>
+                )}
               </div>
 
               <div className="mt-4">
@@ -261,7 +275,10 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                      clearError(e);
+                    }}
                     value={description}
                     type="text"
                     name="description"
@@ -271,6 +288,11 @@ function Admin() {
                     maxLength="100"
                     size="80"
                   />
+                  {validationErrors.description && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.description}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -283,13 +305,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setPrice(e.target.value)}
+                     onChange={(e) => {
+                      setPrice(e.target.value);
+                      clearError(e);
+                    }}
                     value={price}
                     type="text"
                     name="price"
                     className=" block w-2/3 rounded-md"
                     id="price"
                   />
+                  {validationErrors.price && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.price}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -302,13 +332,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setPhoto(e.target.value)}
+                     onChange={(e) => {
+                      setPhoto(e.target.value);
+                      clearError(e);
+                    }}
                     value={photo}
                     type="text"
                     name="photo"
                     className=" block w-2/3 rounded-md"
                     id="photo"
                   />
+                  {validationErrors.photo && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.photo}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -321,13 +359,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setStudio(e.target.value)}
+                     onChange={(e) => {
+                      setStudio(e.target.value);
+                      clearError(e);
+                    }}
                     value={studio}
                     type="text"
                     name="studio"
                     className=" block w-2/3 rounded-md"
                     id="studio"
                   />
+                  {validationErrors.studio && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.studio}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -340,13 +386,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setGenre(e.target.value)}
+                     onChange={(e) => {
+                      setGenre(e.target.value);
+                      clearError(e);
+                    }}
                     value={genre}
                     type="text"
                     name="genre"
                     className=" block w-2/3 rounded-md"
                     id="genre"
                   />
+                  {validationErrors.genre && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.genre}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -359,13 +413,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setRelease(e.target.value)}
+                     onChange={(e) => {
+                      setRelease(e.target.value);
+                      clearError(e);
+                    }}
                     value={release}
                     type="text"
                     name="release"
                     className=" block w-2/3 rounded-md"
                     id="release"
                   />
+                  {validationErrors.release && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.release}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -376,7 +438,6 @@ function Admin() {
               >
                 Creer
               </button>
-              <ToastContainer />
             </form>
           </div>
         )}
@@ -425,10 +486,15 @@ function Admin() {
                       onChange={(e) => setTitle(e.target.value)}
                       value={title}
                       type="text"
-                      name="titre"
+                      name="title"
                       className=" block w-2/3 rounded-md"
-                      id="photo"
+                      id="title"
                     />
+                    {validationErrors.title && (
+                      <p className="text-red-500 text-sm">
+                        {validationErrors.title}
+                      </p>
+                    )}
                   </div>
                   <label
                     htmlFor="text"
@@ -438,13 +504,21 @@ function Admin() {
                   </label>
                   <div className="flex flex-col items-start">
                     <input
-                      onChange={(e) => setShortDescription(e.target.value)}
+                      onChange={(e) => {
+                        setShortDescription(e.target.value);
+                        clearError(e);
+                      }}
                       value={shortDescription}
                       type="text"
                       name="shortDescription"
                       className="block w-2/3 rounded-md"
                       id="shortDescription"
                     />
+                    {validationErrors.shortDescription && (
+                      <p className="text-red-500 text-sm">
+                        {validationErrors.shortDescription}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -457,13 +531,21 @@ function Admin() {
                   </label>
                   <div className="flex flex-col items-start ">
                     <textarea
-                      onChange={(e) => setDescription(e.target.value)}
+                       onChange={(e) => {
+                        setDescription(e.target.value);
+                        clearError(e);
+                      }}
                       value={description}
                       type="text"
                       name="description"
                       className="block w-2/3 rounded-md h-auto py-2 px-3 resize-y"
                       id="description"
                     />
+                    {validationErrors.description && (
+                      <p className="text-red-500 text-sm">
+                        {validationErrors.description}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -477,13 +559,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setPrice(e.target.value)}
+                   onChange={(e) => {
+                    setPrice(e.target.value);
+                    clearError(e);
+                  }}
                     value={price}
                     type="price"
                     name="price"
                     className=" block w-2/3 rounded-md"
                     id="price"
-                  />
+                  />{" "}
+                  {validationErrors.price && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.price}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -496,13 +586,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setPhoto(e.target.value)}
+                    onChange={(e) => {
+                      setPhoto(e.target.value);
+                      clearError(e);
+                    }}
                     value={photo}
                     type="text"
                     name="photo"
                     className=" block w-2/3 rounded-md"
                     id="photo"
                   />
+                  {validationErrors.photo && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.photo}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -515,13 +613,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setStudio(e.target.value)}
+                    onChange={(e) => {
+                      setStudio(e.target.value);
+                      clearError(e);
+                    }}
                     value={studio}
                     type="text"
                     name="text"
                     className=" block w-2/3 rounded-md"
                     id="price"
                   />
+                  {validationErrors.studio && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.studio}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -534,13 +640,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setGenre(e.target.value)}
+                  onChange={(e) => {
+                    setGenre(e.target.value);
+                    clearError(e);
+                  }}
                     value={genre}
                     type="text"
                     name="genre"
                     className=" block w-2/3 rounded-md"
                     id="genre"
                   />
+                  {validationErrors.genre && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.genre}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -553,13 +667,21 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                    onChange={(e) => setRelease(e.target.value)}
+                     onChange={(e) => {
+                      setRelease(e.target.value);
+                      clearError(e);
+                    }}
                     value={release}
                     type="text"
                     name="release"
                     className=" block w-2/3 rounded-md"
                     id="release"
                   />
+                  {validationErrors.release && (
+                    <p className="text-red-500 text-sm">
+                      {validationErrors.release}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -584,22 +706,25 @@ function Admin() {
                   article à retirer
                 </label>
                 <select
-                  value={deleteId}
-                  onChange={handleDeleteId}
-                  className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3"
-                >
-                  {" "}
-                  <option value="">---</option>
-                  {productData.map((product) => (
-                    <option
-                      className="text-black"
-                      value={product.id}
-                      key={product.id}
-                    >
-                      {product.title}
-                    </option>
-                  ))}
-                </select>
+                    value={productId}
+                    onChange={handleProductChange}
+                    className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
+                  >
+                    {" "}
+                    <option value="">---</option>
+                    {productData
+                      .slice()
+                      .sort((a, b) => a.title.localeCompare(b.title))
+                      .map((product) => (
+                        <option
+                          className="text-black"
+                          value={product.id}
+                          key={product.id}
+                        >
+                          {product.title}
+                        </option>
+                      ))}
+                  </select>
               </div>
               <button
                 type="submit"
