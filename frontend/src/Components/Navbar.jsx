@@ -115,12 +115,13 @@ export default function NavBar() {
               recherche
             </NavLink>
           </div>
-          {!logged ||
+          {logged === "" ||
             (logged === false && (
               <div className="hover:text-green-300" id="login">
                 <NavLink to="/login">Login</NavLink>
               </div>
             ))}
+            
           {logged === false && (
             <div className="hover:text-green-300">
               <NavLink to="/signup">Inscription</NavLink>

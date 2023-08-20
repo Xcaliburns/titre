@@ -3,7 +3,6 @@ import CallApi from "../services/CallApi";
 import Navbar from "../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import ValidationSchemaProduct from "../Services/ValidationSchemaProduct";
 import * as yup from "yup";
 
 function Admin() {
