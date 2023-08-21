@@ -138,7 +138,7 @@ function Admin() {
   };
 
   const handleDelete = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (deleteId) {
       CallApi.delete(`/api/product/${deleteId}`)
         .then(() => {
@@ -706,7 +706,7 @@ function Admin() {
                 </label>
                 <select
                     value={productId}
-                    onChange={handleProductChange}
+                    onChange={handleDeleteId}
                     className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
                   >
                     {" "}
