@@ -11,25 +11,8 @@ import Admin from "./pages/Admin";
 import Article from "./pages/article";
 
 function App() {
+  const { user } = useUserContext();
 
-  // useEffect(() => {
-  //   const verifyUser = JSON.parse(localStorage.getItem("user"));
-
-  //   if (!verifyUser) {
-  //     // Si l'utilisateur n'existe pas dans le localStorage, créez-le et enregistrez-le
-  //     const newUser = {
-  //       id: 1,
-  //       email: "user@example.com",
-  //       role: "user",
-  //     };
-  //     localStorage.setItem("user", JSON.stringify(newUser));
-  //   }
-  // }, []);
-
-  const {user } = useUserContext();
-
-
- 
   return (
     <BrowserRouter>
       <Routes>
@@ -41,7 +24,7 @@ function App() {
         <Route
           element={
             <ProtectedRoute
-              isAllowed={user && user.role===("admin") }
+              isAllowed={user && user.role === import.meta.env.VITE_ADMIN_SECRET}
               redirectPath="/"
             />
           }
