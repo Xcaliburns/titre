@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -39,12 +39,12 @@ function MySlider({ data }) {
     <div className="  border-4 border-red-600 rounded-md">
       
       <Slider {...settings}>
-        {data.slice(-3).map((item) => (
+        {data.slice(-4).map((item) => (
           <div
             key={item.id}
-            className="relative h-auto max-w-48 w-full items-center  bg-grey-50 rounded-md shadow-sm shadow-red-600/100"
+            className="relative min-h-[280px] h-auto max-w-48 w-full items-center  bg-grey-50 rounded-md shadow-sm shadow-red-600/100"
           >
-            <div className=" absolute top-0 left-0 text-gray-100 w-full h-full text-5xl   ">a l'affiche</div>
+            {/* <div className=" absolute top-0 left-0 text-gray-100 w-full h-full text-5xl   ">a l'affiche</div> */}
             <img
               className="w-full h-auto object-cover  rounded-md"
               src={item.photo}

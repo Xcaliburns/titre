@@ -10,7 +10,7 @@ export default function NavBar() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logged, setLogged] = useState("");
-  const adminLog = import.meta.env.VITE_ADMIN_LOGIN;
+  const adminLog = import.meta.env.VITE_ADMIN_SECRET;
 
   const logout = (e) => {
     e.preventDefault();
@@ -93,7 +93,7 @@ export default function NavBar() {
               </div>
             )}
             <div className="hover:text-green-300 ml-2" id="admin">
-              {user && user.email === adminLog && (
+              {user && user.role === adminLog && (
                 <NavLink to="/admin">Admin</NavLink>
               )}
             </div>
@@ -128,10 +128,10 @@ export default function NavBar() {
             </div>
           )}
 
-          {user && user.email === adminLog && (
-            <NavLink to="/admin" className="block  hover:text-green-300 ">
+          {user && user.role === adminLog && (
+            <div><NavLink to="/admin" className="block  hover:text-green-300 ">
               Admin
-            </NavLink>
+            </NavLink></div>
           )}
           {logged === true && (
             <div className="hover:text-red-700">
