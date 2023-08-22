@@ -7,6 +7,7 @@ const {
   editOne,
   eraseOne,
 } = require("../controller/product.controller.js");
+
 const authorization = require("../middleware/auth.js");
 const router = express.Router();
 
