@@ -50,9 +50,9 @@ function MySlider({ data }) {
               src={item.photo}
               alt={item.title}
             />
-            <div className="absolute bottom-0 left-0 w-full bg-gray-900 p-4 text-gray-100">
-            <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-              <div className="flex flex-row justify-between items-center align-center">
+            <div className="absolute bottom-0 h-[80px]  left-0 w-full bg-gray-900 p-4 text-gray-100 mb-[-5px] bg-opacity-70 ">
+            <h3 className="text-lg font-semibold ">{item.title}</h3>
+              <div className="flex flex-row justify-between items-center align-center ">
                 <p className="line-clamp-1">{item.description}</p>
               <button
                 type="button"

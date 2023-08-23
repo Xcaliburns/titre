@@ -21,7 +21,7 @@ const getAll = async (req, res) => {
     const users = await findAll();
     res.send(users);
   } catch (e) {
-    next(e);
+    res.sendStatus(500);
   }
 };
 

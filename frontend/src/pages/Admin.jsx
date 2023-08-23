@@ -17,7 +17,7 @@ function Admin() {
   const [productData, setProductData] = useState([]);
 
   const [productId, setProductId] = useState("");
-  const [deleteId, setDeleteId] = useState("");
+  // const [deleteId, setDeleteId] = useState("");
   const [action, setAction] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -25,15 +25,22 @@ function Admin() {
     shortDescription: yup.string().required("Le résumé est requis"),
     description: yup.string().required("La description est requise"),
     price: yup
-  .number()
-  .typeError("Le prix doit être un nombre positif avec au plus 2 décimales")
-  .required("Le prix est requis")
-  .test(    
-    (value) => {
-      if (!value) return false; // Handles the required case
-      return /^\d+(\.\d{1,2})?$/.test(value.toString());
-    }
-  ),
+      .mixed() // Using .mixed() to allow for multiple types
+      .test(
+        "is-valid-price",
+        "Le prix doit être un nombre positif avec au plus 2 décimales",
+        (value) => {
+          if (!value) return false; // Handles the required case
+
+          const parsedValue = parseFloat(value);
+          if (isNaN(parsedValue)) return false; // Not a valid number
+
+          return (
+            parsedValue >= 0 && /^\d+(\.\d{1,2})?$/.test(parsedValue.toFixed(2))
+          );
+        }
+      )
+      .required("Le prix est requis"),
 
     photo: yup.string().required("La photo est requise"),
     title: yup.string().required("Le titre est requis"),
@@ -62,6 +69,8 @@ function Admin() {
     setStudio("");
     setGenre("");
     setRelease("");
+    setProductId("");
+    // setDeleteId("");
   };
 
   const clearError = (e) => {
@@ -84,14 +93,14 @@ function Admin() {
   };
 
   const handleChange = (e) => {
-    e.preventDefault();
+    e.preventDefault;
     reset();
     gameList();
     setAction("update");
   };
 
   const handleErase = (e) => {
-    e.preventDefault();
+    e.preventDefault;
     reset();
     gameList();
     setAction("delete");
@@ -125,6 +134,7 @@ function Admin() {
 
       CallApi.put(`/api/product/${productId}`, fieldsName)
         .then(() => {
+          reset();
           toast.success("Article mis à jour avec succès !");
         })
         .catch((err) => err.response.data);
@@ -138,9 +148,9 @@ function Admin() {
   };
 
   const handleDelete = (e) => {
-    // e.preventDefault();
-    if (deleteId) {
-      CallApi.delete(`/api/product/${deleteId}`)
+    e.preventDefault();
+    if (productId) {
+      CallApi.delete(`/api/product/${productId}`)
         .then(() => {
           toast.success("🦄 article supprimé avec succès!");
           setAction("");
@@ -169,9 +179,11 @@ function Admin() {
     }
   };
 
-  const handleDeleteId = (e) => {
-    setDeleteId(e.target.value);
-  };
+  // const handleDeleteId = (e) => {
+  //   e.preventDefault();
+  //   console.log(e.target.value);
+  //   setProductId(e.target.value,10);
+  // };
 
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
@@ -304,7 +316,7 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                     onChange={(e) => {
+                    onChange={(e) => {
                       setPrice(e.target.value);
                       clearError(e);
                     }}
@@ -331,7 +343,7 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                     onChange={(e) => {
+                    onChange={(e) => {
                       setPhoto(e.target.value);
                       clearError(e);
                     }}
@@ -358,7 +370,7 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                     onChange={(e) => {
+                    onChange={(e) => {
                       setStudio(e.target.value);
                       clearError(e);
                     }}
@@ -385,7 +397,7 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                     onChange={(e) => {
+                    onChange={(e) => {
                       setGenre(e.target.value);
                       clearError(e);
                     }}
@@ -412,7 +424,7 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                     onChange={(e) => {
+                    onChange={(e) => {
                       setRelease(e.target.value);
                       clearError(e);
                     }}
@@ -530,7 +542,7 @@ function Admin() {
                   </label>
                   <div className="flex flex-col items-start ">
                     <textarea
-                       onChange={(e) => {
+                      onChange={(e) => {
                         setDescription(e.target.value);
                         clearError(e);
                       }}
@@ -558,10 +570,10 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                   onChange={(e) => {
-                    setPrice(e.target.value);
-                    clearError(e);
-                  }}
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                      clearError(e);
+                    }}
                     value={price}
                     type="price"
                     name="price"
@@ -639,10 +651,10 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                  onChange={(e) => {
-                    setGenre(e.target.value);
-                    clearError(e);
-                  }}
+                    onChange={(e) => {
+                      setGenre(e.target.value);
+                      clearError(e);
+                    }}
                     value={genre}
                     type="text"
                     name="genre"
@@ -666,7 +678,7 @@ function Admin() {
                 </label>
                 <div className="flex flex-col items-start">
                   <input
-                     onChange={(e) => {
+                    onChange={(e) => {
                       setRelease(e.target.value);
                       clearError(e);
                     }}
@@ -696,7 +708,7 @@ function Admin() {
         )}
         {action === "delete" && (
           <div className="w-full px-6 py-4 lg:min-w-500 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
-            <form className="bg-gray-800 " onSubmit={handleUpdate}>
+            <form className="bg-gray-800 " onSubmit={handleDelete}>
               <div className="mt-4">
                 <label
                   htmlFor="titre"
@@ -706,7 +718,7 @@ function Admin() {
                 </label>
                 <select
                     value={productId}
-                    onChange={handleDeleteId}
+                    onChange={handleProductChange}
                     className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
                   >
                     {" "}
