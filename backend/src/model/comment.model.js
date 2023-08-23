@@ -5,8 +5,8 @@ const findAll= async ()=> {
         const [comments] = await db.query("SELECT c.*, u.name FROM `comment` c LEFT JOIN user u ON c.user_id = u.id ");
 
         return comments;
-    }catch(e){
-        console.log(e);
+    }catch(error){
+      throw new Error(`commentaires introuvables: ${error}`);
     }
 };
 
@@ -15,8 +15,8 @@ const findOne= async (id)=> {
         const [comment] = await db.query("select * from `comment` where id = ? ", [id]);
 
         return comment;
-    }catch(e){
-        console.log(e);
+    }catch(error){
+      throw new Error(`commentaire introuvable: ${error}`);
     }
 };
 

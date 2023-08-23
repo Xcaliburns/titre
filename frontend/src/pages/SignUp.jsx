@@ -12,6 +12,10 @@ function SignUp() {
   const [validationErrors, setValidationErrors] = useState({});
   const navigate = useNavigate();
 
+  const usedName = ()=>{
+    callAPI.get
+  }
+
   const validationSchema = yup.object({
     name: yup.string().required("Le Pseudo est obligatoire"),
     email: yup

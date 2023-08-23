@@ -73,7 +73,7 @@ function Article() {
         />
         <div className="flex flex-col justify-center p-4">
           <h2 className="text-xl font-semibold ">{article.title}</h2>
-          <p className="mt-2 text-sm ">{article.description}</p>
+          <p className="mt-2 text-sm whitespace-pre-wrap ">{article.description}</p>
           <p className="mt-2 text-sm ">{`genre: ${article.genre}`}</p>
           <p className="mt-2 text-sm ">{`studio: ${article.studio}`}</p>
           <p className="mt-2 text-sm ">{`sortie:${article.release}`}</p>

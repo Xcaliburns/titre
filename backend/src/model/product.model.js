@@ -5,8 +5,8 @@ const findAll = async () => {
     const [products] = await db.query("select * from `product`");
 
     return products;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    throw new Error(`Impossible de trouver les produits: ${error}`);
   }
 };
 
@@ -17,8 +17,8 @@ const findOne = async (id) => {
     ]);
 
     return product;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    throw new Error(`Impossible de trouver le produit: ${error}`);
   }
 };
 

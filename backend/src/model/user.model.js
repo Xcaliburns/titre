@@ -7,8 +7,8 @@ const findOne= async (userId)=> {
         const [user] = await db.query("select * from `user` where id = ? ", [userId]);
        
         return user;
-    }catch(e){
-        console.log(e);
+    }catch(error){
+      throw new Error(`utilisateur introuvable: ${error}`);
     }
 };
 
@@ -19,9 +19,17 @@ const findByEmail = async (email) => {
     ]);
 
     return user;
-  } catch (e) {
-    console.log(e);
-    throw new SQLGenericError();
+  } catch (error) {
+    throw new Error(`email introuvable: ${error}`);
+  }
+};
+const findAll = async () => {
+  try {
+    const [users] = await db.query("select * from `user`");
+
+    return users;
+  } catch (error) {
+    throw new Error(`Impossible de trouver les utilisateurs: ${error}`);
   }
 };
 
@@ -37,9 +45,9 @@ const addOne = async (user) => {
         );
 
     return { id: result.insertId, name, email };  /*id: result.insertId clé SQL2 qui renvoie l'id de lutilisateur crée */
-    } catch(e) {
-         console.log(e);
+    } catch(error) {
+      throw new Error(`impossible de creer l'utilisateur: ${error}`);
     }
 }
   
-module.exports= { findOne, addOne,findByEmail };
+module.exports= { findOne, addOne,findByEmail,findAll };

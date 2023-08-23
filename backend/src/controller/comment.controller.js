@@ -6,7 +6,7 @@ const getAll = async(req,res, next)=>{
         
         res.send(comments);
     } catch(e){
-        next(e);
+      res.sendStatus(500);
     }
 
 };
@@ -21,7 +21,7 @@ const getOne = async(req,res,next) =>{
         const [comment] = await findOne(commentId);
         res.send(comment);
     }catch(e){
-        next(e);
+      res.sendStatus(500);
     }
 };
 
@@ -33,7 +33,7 @@ const createOne = async (req, res, next) => {
     const newcomment = await addOne(comment);
     res.status(201).json(newcomment);
   } catch (error) {
-    next(error);
+    res.sendStatus(500);
   }
 };
 
