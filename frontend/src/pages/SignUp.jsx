@@ -2,19 +2,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import callAPI from "../Services/CallAPI";
-import { toast } from "react-toastify";
 import * as yup from "yup";
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [data, setData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
   const navigate = useNavigate();
+  const isNameUnavailable = data.some((user) => user.name === name);
+  const isEmailUnavailable = data.some((user) => user.email === email);
 
-  const usedName = ()=>{
-    callAPI.get
-  }
+  const usedName = () => {
+    callAPI.get("/api/user").then((res) => {
+      setData(res.data);
+    });
+  };
 
   const validationSchema = yup.object({
     name: yup.string().required("Le Pseudo est obligatoire"),
@@ -34,7 +38,12 @@ function SignUp() {
 
   const handleForm = async (e) => {
     e.preventDefault();
+    usedName();
 
+    if (!isNameUnavailable && !isEmailUnavailable) {
+  
+     
+   
     try {
       await validationSchema.validate(
         { name, email, password },
@@ -51,7 +60,7 @@ function SignUp() {
         errors[error.path] = error.message;
       });
       setValidationErrors(errors);
-    }
+    } }
   };
 
   return (
@@ -63,16 +72,19 @@ function SignUp() {
       >
         <div className="flex flex-col my-10">
           <label htmlFor="name" className="w-1/3 text-xl text-gray-100">
-            Name
+            Pseudo
           </label>
           <input
             onChange={(e) => setName(e.target.value)}
             type="text"
             className="rounded mr-10 h-10 w-250 text-xl"
-            id="name"
+            id="pseudo"
           />
-          {validationErrors.name && ( 
-            <p className="text-red-500 text-sm">{validationErrors.name}</p>
+          {validationErrors.pseudo && (
+            <p className="text-red-500 text-sm">{validationErrors.pseudo}</p>
+          )}
+          {isNameUnavailable && (
+            <p className="text-red-500 text-sm">Ce pseudo est indisponible</p>
           )}
         </div>
         <div className="flex flex-col my-10">
@@ -87,6 +99,9 @@ function SignUp() {
           />
           {validationErrors.email && (
             <p className="text-red-500 text-sm">{validationErrors.email}</p>
+          )}
+          {isEmailUnavailable && (
+            <p className="text-red-500 text-sm">Cet email est indisponible</p>
           )}
         </div>
         <div className="flex flex-col my-10">

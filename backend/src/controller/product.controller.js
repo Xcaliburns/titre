@@ -6,6 +6,7 @@ const getAll = async(req,res, next)=>{
         
         res.send(products);
     } catch(e){
+      console.error(e);
       res.sendStatus(500);
     }
 
@@ -21,6 +22,7 @@ const getOne = async(req,res,next) =>{
         const [product] = await findOne(productId);
         res.send(product);
     }catch(e){
+      console.error(e);
       res.sendStatus(500);
     }
 };
@@ -33,6 +35,7 @@ const createOne = async (req, res, next) => {
     const newProduct = await addOne(product);
     res.status(201).json(newProduct);
   } catch (error) {
+    console.error(e);
     res.sendStatus(500);
   }
 };
@@ -49,8 +52,8 @@ const editOne = async (req, res) => {
     } else {
       res.sendStatus(204);
     }
-  } catch (err) {
-    console.error(err);
+  } catch (e) {
+    console.error(e);
     res.sendStatus(500);
   }
 };
@@ -66,8 +69,8 @@ const eraseOne = async (req, res) => {
     } else {
       res.sendStatus(204);
     }
-  } catch (err) {
-    console.error(err);
+  } catch (e) {
+    console.error(e);
     res.sendStatus(500);
   }
 };

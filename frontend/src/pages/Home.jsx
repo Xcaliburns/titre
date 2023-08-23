@@ -32,7 +32,7 @@ function Home() {
         </div>
         <div className="flex flex-wrap justify-center rounded  ">
           {Array.isArray(product) && product.length > 0 ? (
-            product.map((product) => (
+            product.slice(-20).reverse().map((product) => (
               <ProductCard className="" key={product.id} product={product} />
             ))
           ) : (
