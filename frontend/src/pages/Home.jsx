@@ -4,7 +4,7 @@ import { useUserContext } from "../context/UserContext";
 
 import MySlider from "../Components/MySlider";
 import ProductCard from "../Components/productCard";
-import Footer from "../Components/Footer";
+
 
 function Home() {
   const [product, setProduct] = useState([]);
@@ -51,7 +51,7 @@ function Home() {
             <p>No products found.</p>
           )}
         </div>
-        <Footer />
+        
       </div>
     </div>
   );

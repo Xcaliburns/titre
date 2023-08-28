@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import callAPI from "../Services/CallAPI";
 import * as yup from "yup";
 
@@ -7,16 +8,32 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [data, setData] = useState([]);
+  const [nameUnavailable, setNameunavailable] = useState(false);
+  const [emailUnavailable, setEmailUnavailable] = useState(false);
+
   const [validationErrors, setValidationErrors] = useState({});
   const navigate = useNavigate();
 
-  const isNameUnavailable = data.some((user) => user.name === name);
-  const isEmailUnavailable = data.some((user) => user.email === email);
-
   const usedName = () => {
-    callAPI.get("/api/user").then((res) => {
-      setData(res.data);
+    return new Promise((resolve, reject) => {
+      callAPI
+        .get("/api/user")
+        .then((res) => {
+          const isNameUnavailable = res.data.some((user) => user.name === name);
+          const isEmailUnavailable = res.data.some(
+            (user) => user.email === email
+          );
+          setNameunavailable(isNameUnavailable);
+          setEmailUnavailable(isEmailUnavailable);
+
+          resolve({
+            isNameUnavailable: isNameUnavailable,
+            isEmailUnavailable: isEmailUnavailable,
+          });
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   };
 
@@ -38,10 +55,14 @@ function SignUp() {
 
   const handleForm = async (e) => {
     e.preventDefault();
-    usedName();
 
-    if (!isNameUnavailable && !isEmailUnavailable) {
-      try {
+    try {
+      const { isNameUnavailable, isEmailUnavailable } = await usedName();
+
+      console.log(isNameUnavailable);
+      console.log(isEmailUnavailable);
+
+      if (!isNameUnavailable && !isEmailUnavailable) {
         await validationSchema.validate(
           { name, email, password },
           { abortEarly: false }
@@ -51,13 +72,13 @@ function SignUp() {
           .post("/api/user", { email, password, name })
           .then(() => navigate("/login"))
           .catch((err) => console.error(err));
-      } catch (err) {
-        const errors = {};
-        err.inner.forEach((error) => {
-          errors[error.path] = error.message;
-        });
-        setValidationErrors(errors);
       }
+    } catch (err) {
+      const errors = {};
+      err.inner.forEach((error) => {
+        errors[error.path] = error.message;
+      });
+      setValidationErrors(errors);
     }
   };
 
@@ -80,7 +101,7 @@ function SignUp() {
           {validationErrors.pseudo && (
             <p className="text-red-500 text-sm">{validationErrors.pseudo}</p>
           )}
-          {isNameUnavailable && (
+          {nameUnavailable && (
             <p className="text-red-500 text-sm">Ce pseudo est indisponible</p>
           )}
         </div>
@@ -97,7 +118,7 @@ function SignUp() {
           {validationErrors.email && (
             <p className="text-red-500 text-sm">{validationErrors.email}</p>
           )}
-          {isEmailUnavailable && (
+          {emailUnavailable && (
             <p className="text-red-500 text-sm">Cet email est indisponible</p>
           )}
         </div>
