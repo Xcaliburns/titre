@@ -11,6 +11,10 @@ body,
 #root {
   @apply h-full;
 }
+
+
+
+
 .slick-dots {
   position: absolute;
   bottom: -40px;
@@ -21,15 +25,30 @@ body,
   padding: 5;
 }
 
-
-
 .slick-dots li button:before {
   content: "•";
   font-size: 1.5rem;
   opacity: 0.25;
   color: black;
 }
+
 .slick-dots li.slick-active button:before {
   opacity: 0.75;
   color: black;
 }
+
+.slick-prev,
+.slick-next
+{
+    width: 50px;
+    height: 50px;
+   
+}
+
+.slick-prev
+{
+    left: -60px;
+}
+.slick-next{
+    right: -60px;}
+

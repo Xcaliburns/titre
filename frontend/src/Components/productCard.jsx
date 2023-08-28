@@ -13,7 +13,7 @@ function ProductCard({ product }) {
   return (
     <div
       onClick={stockId}
-      className="flex flex-col h-auto md:h-full  items-center border-4 border-red-600 bg-gray-800 text-gray-100 rounded-md shadow-lg shadow-cyan-500/100  mt-3 mx-10 hover:shadow-green-500/100 hover:border-green-500"
+      className="flex flex-col h-auto md:h-full  items-center border-4 border-[#0092ca] bg-gray-800 text-gray-100 rounded-md shadow-lg shadow-cyan-500/100 cursor-pointer mt-3 mx-10 hover:shadow-green-500/100 hover:border-green-500"
     >
       <img
         className=" w-full rounded-md   "

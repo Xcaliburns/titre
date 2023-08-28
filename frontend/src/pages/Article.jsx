@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import CallApi from "../Services/CallApi";
-import Navbar from "../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserContext } from "../context/UserContext";
@@ -63,7 +62,7 @@ function Article() {
   
   return (
     <div className="flex flex-col items-center bg-gray-200 min-h-screen bg-cover">
-      <Navbar />
+      
 
       <div className="flex flex-col items-center mt-3 mx-4 sm:flex-row lg:w-2/3 xl:w-1/2 border-4 border-cyan-500 bg-gray-800 text-gray-100 rounded-md shadow-lg shadow-cyan-500/100 hover:shadow-green-500/100 hover:border-green-500">
         <img
@@ -88,14 +87,14 @@ function Article() {
               rows="1"
               value={commentText}
               onChange={handleCommentChange}
-              placeholder="Add a comment..."
+              placeholder="Ajouter un commentaire..."
               className="w-full p-2 rounded-md border border-gray-500  bg-gray-800  focus:outline-none focus:border-green-500 resize-none"
             />
             <button
               onClick={handleAddComment}
               className="px-4 py-2 ml-2 text-sm font-medium  bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600"
             >
-              Add Comment
+              Ajouter un commentaire
             </button>
             <ToastContainer />
           </div>

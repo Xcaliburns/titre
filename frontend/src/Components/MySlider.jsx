@@ -23,6 +23,7 @@ function MySlider({ data }) {
     slidesToScroll: 1,
     prevArrow: <img src={customPrevArrow} alt="Previous" />,
     nextArrow: <img src={customNextArrow} alt="Next" />,
+    mobileFirst: true,
    
   };
 
@@ -36,13 +37,13 @@ function MySlider({ data }) {
 
   console.log(data);
   return (
-    <div className="  border-4 border-red-600 rounded-md">
+    <div className="  border-4 border-[#0092ca] rounded-md">
       
       <Slider {...settings}>
         {data.slice(-4).map((item) => (
           <div
             key={item.id}
-            className="relative min-h-[280px] h-auto max-w-48 w-full items-center  bg-grey-50 rounded-md shadow-sm shadow-red-600/100"
+            className="relative min-h-[280px] h-auto max-w-48 w-full items-center  bg-grey-50 rounded-md shadow-sm shadow-cyan-600/100"
           >
             {/* <div className=" absolute top-0 left-0 text-gray-100 w-full h-full text-5xl   ">a l'affiche</div> */}
             <img

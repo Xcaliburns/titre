@@ -4,6 +4,7 @@ import { useUserContext } from "./context/UserContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
+import Layout from "./Components/Layout";
 import Login from "./pages/Login";
 import Search from "./pages/Search";
 import SignUp from "./pages/SignUp";
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
@@ -32,6 +34,7 @@ function App() {
           <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }

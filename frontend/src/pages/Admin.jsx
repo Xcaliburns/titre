@@ -1,6 +1,5 @@
 import { useState } from "react";
 import CallApi from "../services/CallApi";
-import Navbar from "../components/Navbar";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
@@ -179,15 +178,11 @@ function Admin() {
     }
   };
 
-  // const handleDeleteId = (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target.value);
-  //   setProductId(e.target.value,10);
-  // };
+  
 
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
-      <Navbar />
+      
 
       <ToastContainer />
 
