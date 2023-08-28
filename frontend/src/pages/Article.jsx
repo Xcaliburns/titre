@@ -3,7 +3,7 @@ import CallApi from "../Services/CallApi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserContext } from "../context/UserContext";
-
+import NavBar from "../Components/Navbar";
 function Article() {
   const [article, setArticle] = useState([]);
   const [commentsData, setCommentsData] = useState([]);
@@ -62,8 +62,8 @@ function Article() {
   
   return (
     <div className="flex flex-col items-center bg-gray-200 min-h-screen bg-cover">
+      <NavBar />
       
-
       <div className="flex flex-col items-center mt-3 mx-4 sm:flex-row lg:w-2/3 xl:w-1/2 border-4 border-cyan-500 bg-gray-800 text-gray-100 rounded-md shadow-lg shadow-cyan-500/100 hover:shadow-green-500/100 hover:border-green-500">
         <img
           className="h-48 w-48 object-cover rounded-md"
@@ -96,11 +96,16 @@ function Article() {
             >
               Ajouter un commentaire
             </button>
+            
             <ToastContainer />
           </div>
         )}
+        {!user && (<p className="text-gray-600">Vous devez vous connecter pour ajouter un commentaire </p>)}
 
         <div className="commentList grid gap-2">
+        <h2 className="w-full text-2xl font-bold text-center mt-10 mb-5 bg-[#0092ca] rounded-md">
+          Commentaires
+        </h2>
           {Array.isArray(commentsList) && commentsList.length > 0 ? (
             commentsList.reverse().map((comment) => (
               <div

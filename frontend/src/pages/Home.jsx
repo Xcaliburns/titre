@@ -4,6 +4,7 @@ import { useUserContext } from "../context/UserContext";
 
 import MySlider from "../Components/MySlider";
 import ProductCard from "../Components/productCard";
+import NavBar from "../Components/Navbar";
 
 
 function Home() {
@@ -21,6 +22,7 @@ function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center  min-h-full lg:text-xl  ">
+      <NavBar />
       <div className="flex flex-col  items-center bg-gray-100 min-h-full bg-cover w-full  shadow-xl shadow-blue-200  rounded-md-200  rounded-md ">
         <h2 className="w-full text-2xl font-bold text-center mt-5 bg-[#0092ca] rounded-md ">
           A l'affiche

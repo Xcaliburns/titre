@@ -9,7 +9,7 @@ export default function NavBar() {
   const { user, setUser } = useUserContext();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [logged, setLogged] = useState("");
+  const [logged, setLogged] = useState(false);
   const adminLog = import.meta.env.VITE_ADMIN_SECRET;
 
   const logout = (e) => {
@@ -65,8 +65,8 @@ export default function NavBar() {
           className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:pt-6 md:text-xl  justify-center pb-4"
           id="menu"
         >
-          <div className="hover:text-[#0092ca]" id="home">
-            <NavLink to="/">Accueil</NavLink>
+          <div className="hover:text-[#0092ca]" id="home" >
+           <NavLink to="/">Accueil</NavLink>
           </div>
           <div className="hover:text-[#0092ca]">
             <NavLink to="/search">recherche</NavLink>

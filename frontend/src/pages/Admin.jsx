@@ -3,6 +3,7 @@ import CallApi from "../services/CallApi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
+import Navbar from "../Components/Navbar";
 
 function Admin() {
   const [shortDescription, setShortDescription] = useState("");
@@ -183,7 +184,7 @@ function Admin() {
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
       
-
+      <Navbar />
       <ToastContainer />
 
       <div>

@@ -32,10 +32,10 @@ function MySlider({ data }) {
   const stockId = (id) => {
     localStorage.setItem("singleProductId", id);
     navigate(`/article/${id}`);
-    console.log(id);
+    
   };
 
-  console.log(data);
+  
   return (
     <div className="  border-4 border-[#0092ca] rounded-md">
       
