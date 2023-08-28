@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Navbar from "../Components/Navbar";
 import callAPI from "../Services/CallAPI";
 import * as yup from "yup";
 
@@ -81,7 +81,8 @@ function SignUp() {
   };
 
   return (
-    <div className="flex flex-col min-h-full items-center bg-slate-500">
+    <div className="flex flex-col min-h-full items-center ">
+      <Navbar />
       <form
         onSubmit={handleForm}
         className="w-full px-6 py-4 mt-6 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg"
