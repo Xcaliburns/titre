@@ -59,9 +59,7 @@ function SignUp() {
     try {
       const { isNameUnavailable, isEmailUnavailable } = await usedName();
 
-      console.log(isNameUnavailable);
-      console.log(isEmailUnavailable);
-
+     
       if (!isNameUnavailable && !isEmailUnavailable) {
         await validationSchema.validate(
           { name, email, password },
