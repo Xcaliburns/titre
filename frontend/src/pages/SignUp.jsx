@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Components/Navbar";
 import callAPI from "../Services/CallAPI";
 import * as yup from "yup";
 
@@ -11,6 +10,7 @@ function SignUp() {
   const [data, setData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
   const navigate = useNavigate();
+
   const isNameUnavailable = data.some((user) => user.name === name);
   const isEmailUnavailable = data.some((user) => user.email === email);
 
@@ -41,31 +41,28 @@ function SignUp() {
     usedName();
 
     if (!isNameUnavailable && !isEmailUnavailable) {
-  
-     
-   
-    try {
-      await validationSchema.validate(
-        { name, email, password },
-        { abortEarly: false }
-      );
+      try {
+        await validationSchema.validate(
+          { name, email, password },
+          { abortEarly: false }
+        );
 
-      callAPI
-        .post("/api/user", { email, password, name })
-        .then(() => navigate("/login"))
-        .catch((err) => console.error(err));
-    } catch (err) {
-      const errors = {};
-      err.inner.forEach((error) => {
-        errors[error.path] = error.message;
-      });
-      setValidationErrors(errors);
-    } }
+        callAPI
+          .post("/api/user", { email, password, name })
+          .then(() => navigate("/login"))
+          .catch((err) => console.error(err));
+      } catch (err) {
+        const errors = {};
+        err.inner.forEach((error) => {
+          errors[error.path] = error.message;
+        });
+        setValidationErrors(errors);
+      }
+    }
   };
 
   return (
     <div className="flex flex-col min-h-full items-center bg-slate-500">
-      <Navbar />
       <form
         onSubmit={handleForm}
         className="w-full px-6 py-4 mt-6 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg"

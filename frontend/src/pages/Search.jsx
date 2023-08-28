@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import CallApi from "../services/CallApi";
-import Navbar from "../components/Navbar";
+
 import ProductCard from "../Components/productCard";
 
 function Search() {
@@ -44,7 +44,6 @@ function Search() {
 
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
-      <Navbar />
       <div className="flex flex-col lg:flex-row">
         <div className="w-full px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg">
           <form className="bg-gray-800 ">
@@ -80,8 +79,8 @@ function Search() {
       <div className="flex flex-wrap justify-center rounded ">
         {Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
           filteredProducts
-            .slice() 
-            .sort((a, b) => a.title.localeCompare(b.title)) 
+            .slice()
+            .sort((a, b) => a.title.localeCompare(b.title))
             .map((product) => (
               <ProductCard className="" key={product.id} product={product} />
             ))

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Components/Navbar";
+
 import callApi from "../Services/CallApi";
 import { useUserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const[logged, setLogged] = useState("");
+  const [logged, setLogged] = useState("");
 
   const { setUser } = useUserContext();
 
@@ -25,11 +25,10 @@ function Login() {
           localStorage.setItem("user", JSON.stringify(userOnline));
           setUser(JSON.parse(localStorage.getItem("user")));
           localStorage.setItem("logged", JSON.stringify(true));
-          setLogged(true)
+          setLogged(true);
           navigate("/");
         })
         .catch((err) => console.error("Erreur : ", err));
-                        
     } else {
       alert("Please specify email and password");
     }
@@ -37,7 +36,6 @@ function Login() {
 
   return (
     <div className="flex flex-col min-h-full items-center  bg-gray-200">
-      <Navbar />
       <form
         onSubmit={handleSubmit}
         className="w-full  px-6 py-4 mt-6 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg"

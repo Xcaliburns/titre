@@ -32,14 +32,15 @@ export default function NavBar() {
   }, []);
 
   return (
-    <nav className="w-full bg-gray-600 shadow-xl shadow-blue-200 h-24 rounded-md z-50 text-gray-100">
+    <nav className="w-full bg-gray-800 shadow-xl shadow-blue-200 h-24 rounded-md z-50 text-gray-100">
       <div className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-8 pt-8">
         <div data-testid="navbar-logo">
           <NavLink to="/">
             {" "}
             <a>
               <h2 className=" flex flex-row text-2xl  font-bold ">
-                <p>{`InDé `} </p> <p className="text-blue-400">{` Jouable`}</p>
+                <p>{`InDé `} </p>{" "}
+                <p className="text-[#0092ca] ">{` Jouable`}</p>
               </h2>
 
               <p className="">la passion des jeux indés</p>
@@ -64,23 +65,23 @@ export default function NavBar() {
           className="hidden md:flex md:flex-row md:items-center md:space-x-6 md:pt-6 md:text-xl  justify-center pb-4"
           id="menu"
         >
-          <div className="hover:text-green-300" id="home">
+          <div className="hover:text-[#0092ca]" id="home">
             <NavLink to="/">Accueil</NavLink>
           </div>
-          <div className="hover:text-green-300">
+          <div className="hover:text-[#0092ca]">
             <NavLink to="/search">recherche</NavLink>
           </div>
 
           {logged === "" ||
             (logged === false && (
-              <div className="hover:text-green-300" id="login">
+              <div className="hover:text-[#0092ca]" id="login">
                 <NavLink to="/login">Login</NavLink>
               </div>
             ))}
 
           {logged === "" ||
             (logged === false && (
-              <div className="hover:text-green-300" id="signup">
+              <div className="hover:text-[#0092ca]" id="signup">
                 <NavLink to="/signup">Inscription</NavLink>
               </div>
             ))}
@@ -121,7 +122,7 @@ export default function NavBar() {
                 <NavLink to="/login">Login</NavLink>
               </div>
             ))}
-            
+
           {logged === false && (
             <div className="hover:text-green-300">
               <NavLink to="/signup">Inscription</NavLink>
@@ -129,9 +130,11 @@ export default function NavBar() {
           )}
 
           {user && user.role === adminLog && (
-            <div><NavLink to="/admin" className="block  hover:text-green-300 ">
-              Admin
-            </NavLink></div>
+            <div>
+              <NavLink to="/admin" className="block  hover:text-green-300 ">
+                Admin
+              </NavLink>
+            </div>
           )}
           {logged === true && (
             <div className="hover:text-red-700">
