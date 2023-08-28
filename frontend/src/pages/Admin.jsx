@@ -179,11 +179,8 @@ function Admin() {
     }
   };
 
-  
-
   return (
     <div className="flex flex-col  items-center text-xl bg-gray-200 min-h-full">
-      
       <Navbar />
       <ToastContainer />
 
@@ -215,14 +212,14 @@ function Admin() {
 
       <div className="flex flex-col lg:flex-row">
         {action === "creation" && (
-          <div className="w-full px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md rounded-lg">
+          <div className="w-screen px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md rounded-lg">
             <form className="bg-gray-800 " onSubmit={handleSubmit}>
               <div className="mt-4">
                 <label
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  titre
+                  Titre
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -248,7 +245,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  resumé
+                  Résumé
                 </label>
               </div>
               <div className="flex flex-col items-start">
@@ -276,12 +273,12 @@ function Admin() {
               <div className="mt-4">
                 <label
                   htmlFor="text"
-                  className="block text-sm font-medium text-gray-400 "
+                  className="block text-sm font-medium text-gray-400 undefined"
                 >
-                  description
+                  Contenu de l'article
                 </label>
-                <div className="flex flex-col items-start">
-                  <input
+                <div className="flex flex-col items-start ">
+                  <textarea
                     onChange={(e) => {
                       setDescription(e.target.value);
                       clearError(e);
@@ -289,11 +286,8 @@ function Admin() {
                     value={description}
                     type="text"
                     name="description"
-                    className="block w-2/3 rounded-md"
+                    className="block w-2/3 rounded-md h-auto py-2 px-3 resize-y"
                     id="description"
-                    minLength="4"
-                    maxLength="100"
-                    size="80"
                   />
                   {validationErrors.description && (
                     <p className="text-red-500 text-sm">
@@ -308,7 +302,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  prix
+                  Prix
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -335,7 +329,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  photo
+                  Url De la photo
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -362,7 +356,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  studio
+                  Studio
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -389,7 +383,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  genre
+                  Genre
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -416,7 +410,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  release
+                  Sortie
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -443,14 +437,14 @@ function Admin() {
                 className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
                 onClick={handleSubmit}
               >
-                Creer
+                Creer un article
               </button>
             </form>
           </div>
         )}
 
         {action === "update" && (
-          <div className="px-6 py-4 mt-10 m-5 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md sm:rounded-lg w-full min-h-800">
+          <div className="w-screen px-6 py-4 m-5 mt-10 overflow-hidden bg-gray-800 shadow-xl border-solid sm:max-w-md rounded-lg">
             <form className="bg-gray-800 " onSubmit={handleUpdate}>
               <div className="bg">
                 <div className="mt-4">
@@ -507,7 +501,7 @@ function Admin() {
                     htmlFor="text"
                     className="block text-sm font-medium text-gray-400  mt-4"
                   >
-                    résumé
+                    Résumé
                   </label>
                   <div className="flex flex-col items-start">
                     <input
@@ -520,6 +514,9 @@ function Admin() {
                       name="shortDescription"
                       className="block w-2/3 rounded-md"
                       id="shortDescription"
+                      minLength="4"
+                      maxLength="100"
+                      size="80"
                     />
                     {validationErrors.shortDescription && (
                       <p className="text-red-500 text-sm">
@@ -589,7 +586,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  Photo
+                  Url de la Photo
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -643,7 +640,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  genre
+                  Genre
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -670,7 +667,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  release
+                  Sortie
                 </label>
                 <div className="flex flex-col items-start">
                   <input
@@ -697,7 +694,7 @@ function Admin() {
                 onClick={handleUpdate}
                 className="inline-flex items-center px-4 py-2 mt-4 ml-4 text-xs font-semibold tracking-widest text-gray-100 uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false hover:bg-green-500"
               >
-                Update
+                Mise à jour
               </button>
             </form>
           </div>
@@ -710,28 +707,28 @@ function Admin() {
                   htmlFor="titre"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  article à retirer
+                  Article à retirer
                 </label>
                 <select
-                    value={productId}
-                    onChange={handleProductChange}
-                    className="pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
-                  >
-                    {" "}
-                    <option value="">---</option>
-                    {productData
-                      .slice()
-                      .sort((a, b) => a.title.localeCompare(b.title))
-                      .map((product) => (
-                        <option
-                          className="text-black"
-                          value={product.id}
-                          key={product.id}
-                        >
-                          {product.title}
-                        </option>
-                      ))}
-                  </select>
+                  value={productId}
+                  onChange={handleProductChange}
+                  className="w-auto pl-2 text-black h-10 rounded-lg bg-gray-200 shadow-lg shadow-blue-500/50 w-2/3 "
+                >
+                  {" "}
+                  <option value="">---</option>
+                  {productData
+                    .slice()
+                    .sort((a, b) => a.title.localeCompare(b.title))
+                    .map((product) => (
+                      <option
+                        className="text-black"
+                        value={product.id}
+                        key={product.id}
+                      >
+                        {product.title}
+                      </option>
+                    ))}
+                </select>
               </div>
               <button
                 type="submit"
