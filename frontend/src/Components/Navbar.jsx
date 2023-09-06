@@ -144,6 +144,11 @@ export default function NavBar() {
               </NavLink>
             </div>
           )}
+               {logged === true && (
+          <div className="hover:text-[#0092ca]" id="contact">
+            <NavLink to="/contact">Contact</NavLink>
+          </div>
+        )}
           {logged === true && (
             <div className="hover:text-red-700">
               <button className="" type="button" onClick={logout}>
