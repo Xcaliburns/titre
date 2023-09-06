@@ -329,7 +329,7 @@ function Admin() {
                   htmlFor="text"
                   className="block text-sm font-medium text-gray-400 "
                 >
-                  Url De la photo
+                  Url de la photo
                 </label>
                 <div className="flex flex-col items-start">
                   <input

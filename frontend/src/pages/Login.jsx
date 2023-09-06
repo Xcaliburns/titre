@@ -30,7 +30,7 @@ function Login() {
         })
         .catch((err) => console.error("Erreur : ", err));
     } else {
-      alert("Please specify email and password");
+      alert("entrez un email et un mot de passe valides");
     }
   };
 
@@ -55,7 +55,7 @@ function Login() {
         </div>
         <div className="flex flex-col my-10">
           <label htmlFor="password" className="w-1/3 text-xl text-gray-100 ">
-            Password
+            Mot de passe
           </label>
           <input
             onChange={(e) => setPassword(e.target.value)}
