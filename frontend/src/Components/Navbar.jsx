@@ -85,6 +85,13 @@ export default function NavBar() {
                 <NavLink to="/signup">Inscription</NavLink>
               </div>
             ))}
+              {logged === true && (
+          <div className="hover:text-[#0092ca]" id="contact">
+            <NavLink to="/contact">Contact</NavLink>
+          </div>
+        )}
+            
+            
           <div className="flex flex-row" id="logout">
             {logged === true && (
               <div className="hover:text-red-700" id="logout">
@@ -92,6 +99,7 @@ export default function NavBar() {
                   Logout
                 </button>
               </div>
+              
             )}
             <div className="hover:text-green-300 ml-2" id="admin">
               {user && user.role === adminLog && (
