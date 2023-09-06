@@ -10,6 +10,7 @@ import Search from "./pages/Search";
 import SignUp from "./pages/SignUp";
 import Admin from "./pages/Admin";
 import Article from "./pages/article";
+import Contact from"./pages/Contact";
 
 function App() {
   const { user } = useUserContext();
@@ -23,6 +24,7 @@ function App() {
         <Route path="search" element={<Search />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="article/:id" element={<Article />} />
+        <Route path="contact" element={<Contact />} />
         <Route
           element={
             <ProtectedRoute
