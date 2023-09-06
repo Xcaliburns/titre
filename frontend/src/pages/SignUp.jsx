@@ -123,7 +123,7 @@ function SignUp() {
         </div>
         <div className="flex flex-col my-10">
           <label htmlFor="password" className="w-1/3 text-xl text-gray-100">
-            Password
+            Mot de Passe
           </label>
           <input
             onChange={(e) => setPassword(e.target.value)}

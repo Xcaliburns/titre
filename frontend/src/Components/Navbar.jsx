@@ -69,13 +69,13 @@ export default function NavBar() {
            <NavLink to="/">Accueil</NavLink>
           </div>
           <div className="hover:text-[#0092ca]">
-            <NavLink to="/search">recherche</NavLink>
+            <NavLink to="/search">Recherche</NavLink>
           </div>
 
           {logged === "" ||
             (logged === false && (
               <div className="hover:text-[#0092ca]" id="login">
-                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/login">Connexion</NavLink>
               </div>
             ))}
 
@@ -113,13 +113,13 @@ export default function NavBar() {
           </NavLink>
           <div className="hover:text-green-300">
             <NavLink to="/search" className="block  hover:text-green-300 py-2">
-              recherche
+              Recherche
             </NavLink>
           </div>
           {logged === "" ||
             (logged === false && (
               <div className="hover:text-green-300" id="login">
-                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/login">Connexion</NavLink>
               </div>
             ))}
 

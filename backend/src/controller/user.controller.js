@@ -30,7 +30,7 @@ const createOne = async (req, res) => {
     // const { name, email, password } = req.body;
     const errors = validateUser(req.body);
 
-    if (errors) return res.stauts(401).send(errors);
+    if (errors) return res.status(401).send(errors);
 
     const hashedPassword = await hashPassword(req.body.password);
 

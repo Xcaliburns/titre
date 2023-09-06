@@ -4,7 +4,7 @@ const { encodeJWT } = require("../helper/jwt.helper.js");
 const validateLogin = require("../validator/login.validator.js");
 
 
-// 1h45
+
 const login = async (req, res, next) => {
   try {
     const errors = validateLogin(req.body);
