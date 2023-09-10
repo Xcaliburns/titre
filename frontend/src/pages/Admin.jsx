@@ -107,7 +107,7 @@ function Admin() {
   };
 
   const handleSubmit = async (err) => {
-    err.preventDefault;
+    err.preventDefault();
     try {
       await ValidationSchemaProduct.validate(fieldsName, { abortEarly: false });
 
