@@ -30,7 +30,7 @@ const addOne = async (comment) => {
 
     return { id: result.insertId,text, user_id, product_id  };  
     } catch (error) {
-        throw new Error(`Impossible de créer le produit: ${error}`);
+        throw new Error(`Impossible de créer le commentaire: ${error}`);
     }
 }
 

@@ -1,6 +1,6 @@
 const { decodeJWT } = require("../helper/jwt.helper.js");
 
-const authorization = async (req, res, next) => {
+const authorizationComment = async (req, res, next) => {
   try {
     const token = req.cookies?.auth_token;
     
@@ -10,8 +10,9 @@ const authorization = async (req, res, next) => {
     const data = decodeJWT(token);
 
     req.user = data;
+    
    
-    if (data.role!=='admin'){throw new Error();}
+    if (data.role!=='admin'&& data.role!=='user'){throw new Error();}
 
     return next();
   } catch (e) {
@@ -19,4 +20,4 @@ const authorization = async (req, res, next) => {
   }
 };
 
-module.exports = authorization;
+module.exports = authorizationComment;

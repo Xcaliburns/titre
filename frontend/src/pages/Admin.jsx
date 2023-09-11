@@ -30,10 +30,9 @@ function Admin() {
         "is-valid-price",
         "Le prix doit être un nombre positif avec au plus 2 décimales",
         (value) => {
-          if (!value) return false; // Handles the required case
-
+          if (!value) return false; 
           const parsedValue = parseFloat(value);
-          if (isNaN(parsedValue)) return false; // Not a valid number
+          if (isNaN(parsedValue)) return false; 
 
           return (
             parsedValue >= 0 && /^\d+(\.\d{1,2})?$/.test(parsedValue.toFixed(2))
