@@ -15,7 +15,7 @@ Il illustre ma capacité à concevoir une application full stack moderne, en uti
 - **Front-end** : React, JSX, CSS Modules 
 - **Back-end** : Node.js, Express
 - **Base de données** :  MySQL
-- **Outils** : GitHub, Postman, Visual Studio Code
+- **Outils** : GitHub, Postman, Visual Studio Code , Figma, trello
 
 ## 📄 CV
 
